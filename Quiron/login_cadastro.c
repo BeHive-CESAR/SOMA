@@ -30,17 +30,20 @@ void cadastrar(){
 int login(){
     Usuario user, auth;
 
-    printf("Insira seu E-mail cadastrado: ");
-    scanf(" %[^\n]", user.email);
-
-    printf("Insira sua senha: ");
-    scanf(" %[^\n]", user.senha);
-
     FILE *fp = fopen(FILE_NAME, "r");
 
     if (fp == NULL){
         printf("Nenhum usuario foi cadastrado! :()");
+        return 1;
+
     }else{
+
+        printf("Insira seu E-mail cadastrado: ");
+        scanf(" %[^\n]", user.email);
+
+        printf("Insira sua senha: ");
+        scanf(" %[^\n]", user.senha);
+
         char linha[69];
         while(fgets(linha, 70, fp) != NULL){
             char* token = strtok(linha, " ");
@@ -53,7 +56,6 @@ int login(){
             auth.senha[strlen(auth.senha)-1] = '\0';
 
             if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
-                printf("FUNCIONOU PORRA");
                 fclose(fp);
                 return 0;
             }

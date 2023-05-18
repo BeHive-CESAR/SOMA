@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "interface.h"
 #include "login_cadastro.h"
 
@@ -7,7 +8,7 @@
 
 void menu(){
     unsigned int op;
-    printf("Selecione o que desejar: \n[1]Login\n[2]Cadastro");
+    printf("[1]Login\n[2]Cadastro\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
 
     switch (op)
@@ -16,12 +17,19 @@ void menu(){
         if (login() == 0){
             printf("logado");
         }else{
-            printf("Usuario invalido");
+            printf("Nao foi possivel realizar o login\n");
+            menu();
         }
         break;
     
     case 2:
         cadastrar();
+        menu();
+        break;
+    
+    case 0:
+        printf("Obrigado e ate a proxima :) ");
+        exit(0);
         break;
 
     default:
