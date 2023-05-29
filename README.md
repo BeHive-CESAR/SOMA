@@ -22,4 +22,4 @@ Victória Siqueira</p>
   Pedro Villas Boas
 </p>
 
-<p><a href="https://sites.google.com/d/1gMlLWQ1lGoghUHL9xyuPlTG-TrsMg5J1/p/15-kMvQZDep2UFtWcNyz1Ph6KBQ68dzUU/edit">Link para nosso site</a></p>
+<p><a href="https://sites.google.com/cesar.school/qiron/início?authuser=1">Link para nosso site</a></p>
