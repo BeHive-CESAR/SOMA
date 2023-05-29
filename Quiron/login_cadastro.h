@@ -5,6 +5,6 @@ typedef struct {
 } Usuario;
 
 
-void menu();
-void cadastrar();
+int cadastrar();
 int login();
+int login_coord();

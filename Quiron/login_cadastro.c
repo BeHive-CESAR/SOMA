@@ -2,18 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include "login_cadastro.h"
+#include "interface.h"
+
 
 #define FILE_NAME "cadastrados.txt"
-#define TRUE 0
-#define FALSE 1
 
 
-void cadastrar(){
+int cadastrar(){
 
     Usuario user;
-
-    printf("Cargo\n[1]Preceptor [2]Residente:  ");
+    printf("REALIZAR CADASTROS\n");
+    printf("Cargo\n[1]Preceptor [2]Residente [3]Cancelar:  ");
     scanf("%d", &user.idCargo);
+    if (user.idCargo == 3){
+        return 1;
+    }
 
     printf("Email: ");
     scanf(" %[^\n]", user.email);
@@ -24,6 +27,8 @@ void cadastrar(){
     FILE *fp = fopen(FILE_NAME, "a+");
     fprintf(fp, "%d %s %s\n", user.idCargo, user.email, user.senha);
     fclose(fp);
+    
+    return 0;
 
 }
 
@@ -67,4 +72,22 @@ int login(){
 
         
     }
+
+int login_coord(){
+
+    char login[10];
+    char senha[10];
+
+    printf("Digite seu login: ");
+    scanf("%s", login);
+    printf("Digite sua senha: ");
+    scanf("%s", senha);
+
+    if (strcmp(login, "admin") && strcmp(login, "admin")){
+        return 0;
+    }else{
+        return 1;
+    }
+
+}
 

@@ -6,9 +6,9 @@
 #define TRUE 0
 #define FALSE 1
 
-void menu(){
+void main_menu(){
     unsigned int op;
-    printf("[1]Login\n[2]Cadastro\n[0]Finalizar Programa\nSelecione o que desejar: ");
+    printf("[1]Login\n[2]Acesso Coordenacao\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
 
     switch (op)
@@ -18,13 +18,20 @@ void menu(){
             printf("logado");
         }else{
             printf("Nao foi possivel realizar o login\n");
-            menu();
+            main_menu();
         }
         break;
     
     case 2:
-        cadastrar();
-        menu();
+        if (login_coord()){
+            if (!cadastrar()){
+                main_menu(); // Nesta Parte iremos chamar a função responsavel pela interface da coordenação
+            }
+        }else{
+            printf("Credenciais Invalidos!\n");
+            main_menu();
+        }
+        main_menu();
         break;
     
     case 0:
@@ -34,7 +41,7 @@ void menu(){
 
     default:
         printf("Opcao invalida! Tente novamente\n");
-        menu();
+        main_menu();
         break;
     }
 }
