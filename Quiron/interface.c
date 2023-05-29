@@ -23,7 +23,7 @@ void main_menu(){
         break;
     
     case 2:
-        if (login_coord()){
+        if (login_coord() == 0){
             if (!cadastrar()){
                 main_menu(); // Nesta Parte iremos chamar a função responsavel pela interface da coordenação
             }
