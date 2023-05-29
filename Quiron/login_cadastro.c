@@ -83,7 +83,7 @@ int login_coord(){
     printf("Digite sua senha: ");
     scanf("%s", senha);
 
-    if (strcmp(login, "admin") && strcmp(login, "admin")){
+    if (strcmp(login, "admin") && strcmp(senha, "admin")){
         return 0;
     }else{
         return 1;
