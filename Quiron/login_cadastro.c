@@ -11,10 +11,13 @@
 int cadastrar(){
 
     Usuario user;
-    printf("REALIZAR CADASTROS\n");
-    printf("Cargo\n[1]Preceptor [2]Residente [3]Cancelar:  ");
+    system("cls");
+    printf("REALIZAR CADASTRO\n");
+    printf("Seleciona um dos cargos abaixo para cadastrar\n[1]Preceptor [2]Residente [3]Cancelar:  ");
     scanf("%d", &user.idCargo);
+
     if (user.idCargo == 3){
+        system("cls");
         return 1;
     }
 
@@ -25,20 +28,23 @@ int cadastrar(){
     scanf(" %[^\n]", user.senha);
 
     FILE *fp = fopen(FILE_NAME, "a+");
+    system("cls");
     fprintf(fp, "%d %s %s\n", user.idCargo, user.email, user.senha);
     fclose(fp);
     
     return 0;
+    
 
 }
 
 int login(){
+    system("cls");
     Usuario user, auth;
 
     FILE *fp = fopen(FILE_NAME, "r");
 
     if (fp == NULL){
-        printf("Nenhum usuario foi cadastrado! :()");
+        printf("Nenhum usuario foi cadastrado! :o\n");
         return 1;
 
     }else{
@@ -62,11 +68,13 @@ int login(){
 
             if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
                 fclose(fp);
+                system("cls");
                 return 0;
             }
             
         }
         fclose(fp);
+        system("cls");
         return 1;
     }
 
@@ -74,6 +82,8 @@ int login(){
     }
 
 int login_coord(){
+
+    system("cls");
 
     char login[10];
     char senha[10];
@@ -85,8 +95,10 @@ int login_coord(){
 
     if (strcmp(login, "admin") == 0 && strcmp(senha, "admin") == 0){
         return 0;
+        system("cls");
     }else{
         return 1;
+        system("cls");
     }
 
 }

@@ -8,17 +8,21 @@
 
 void main_menu(){
     unsigned int op;
-    printf("[1]Login\n[2]Acesso Coordenacao\n[0]Finalizar Programa\nSelecione o que desejar: ");
+    printf("Selecione uma das opções abaixo:\n[1]Login\n[2]Acesso Coordenacao\n[0]Finalizar Programa\n");
     scanf("%d", &op);
+    system("cls");
 
     switch (op)
     {
     case 1:
         if (login() == 0){
-            printf("logado");
+            system("cls");
+            printf("Logado\n");
         }else{
+            system("cls");
             printf("Nao foi possivel realizar o login\n");
             main_menu();
+            
         }
         break;
     
@@ -28,6 +32,7 @@ void main_menu(){
                 main_menu(); // Nesta Parte iremos chamar a função responsavel pela interface da coordenação
             }
         }else{
+            system("cls");
             printf("Credenciais Invalidos!\n");
             main_menu();
         }
@@ -35,11 +40,13 @@ void main_menu(){
         break;
     
     case 0:
-        printf("Obrigado e ate a proxima :) ");
+        system("cls");
+        printf("Obrigado e ate a proxima :) \n");
         exit(0);
         break;
 
     default:
+        system("cls");
         printf("Opcao invalida! Tente novamente\n");
         main_menu();
         break;
