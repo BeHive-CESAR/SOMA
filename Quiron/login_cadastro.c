@@ -49,6 +49,10 @@ int login(){
         printf("Insira sua senha: ");
         scanf(" %[^\n]", user.senha);
 
+        if (strcmp(user.email, "admin") == 0 && strcmp(user.senha, "admin") == 0){
+            return 3;
+        }
+
         char linha[69];
         while(fgets(linha, 70, fp) != NULL){
             char* token = strtok(linha, " ");
@@ -62,32 +66,14 @@ int login(){
 
             if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
                 fclose(fp);
-                return 0;
+                return auth.idCargo;
             }
             
         }
         fclose(fp);
-        return 1;
+        return 4;
     }
 
         
-    }
-
-int login_coord(){
-
-    char login[10];
-    char senha[10];
-
-    printf("Digite seu login: ");
-    scanf("%s", login);
-    printf("Digite sua senha: ");
-    scanf("%s", senha);
-
-    if (strcmp(login, "admin") == 0 && strcmp(senha, "admin") == 0){
-        return 0;
-    }else{
-        return 1;
-    }
-
 }
 

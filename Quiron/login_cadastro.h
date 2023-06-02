@@ -7,4 +7,3 @@ typedef struct {
 
 int cadastrar();
 int login();
-int login_coord();

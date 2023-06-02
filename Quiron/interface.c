@@ -7,33 +7,34 @@
 #define FALSE 1
 
 void main_menu(){
-    unsigned int op;
-    printf("[1]Login\n[2]Acesso Coordenacao\n[0]Finalizar Programa\nSelecione o que desejar: ");
+    unsigned int op, id;
+    printf("[1]Login\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
 
-    switch (op)
-    {
+    switch (op){
     case 1:
-        if (login() == 0){
-            printf("logado");
-        }else{
-            printf("Nao foi possivel realizar o login\n");
+        switch (id=login()){
+
+        case 1:
+            printf("--- Preceptor ---");
+            break;
+        
+        case 2:
+            printf("--- Residente ---");
+            break;
+        
+        case 3:
+            printf("--- Coordenacao ---\n");
+            menu_coordenacao();
+            break;
+
+        default:
+            printf("Login Invalido! Tente novamente\n");
             main_menu();
+            break;
         }
         break;
-    
-    case 2:
-        if (login_coord() == 0){
-            if (!cadastrar()){
-                main_menu(); // Nesta Parte iremos chamar a função responsavel pela interface da coordenação
-            }
-        }else{
-            printf("Credenciais Invalidos!\n");
-            main_menu();
-        }
-        main_menu();
-        break;
-    
+
     case 0:
         printf("Obrigado e ate a proxima :) ");
         exit(0);
@@ -43,5 +44,27 @@ void main_menu(){
         printf("Opcao invalida! Tente novamente\n");
         main_menu();
         break;
+    }
+}
+
+void menu_coordenacao(){
+    unsigned int op;
+
+    printf("[1]Cadastrar novos usuarios\n[0]Sair da conta\nSelecione o que desejar: ");
+    scanf("%d", &op);
+
+    switch(op){
+        case 1:
+            cadastrar();
+            break;
+        
+        case 0:
+            main_menu();
+            break;
+        
+        default:
+            printf("Opcao invalida! Tente novamente\n");
+            menu_coordenacao();
+            break;
     }
 }
