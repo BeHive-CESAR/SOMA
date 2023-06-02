@@ -11,10 +11,13 @@
 int cadastrar(){
 
     Usuario user;
-    printf("REALIZAR CADASTROS\n");
-    printf("Cargo\n[1]Preceptor [2]Residente [3]Cancelar:  ");
+    system("cls");
+    printf("REALIZAR CADASTRO\n");
+    printf("Seleciona um dos cargos abaixo para cadastrar\n[1]Preceptor [2]Residente [3]Cancelar:  ");
     scanf("%d", &user.idCargo);
+
     if (user.idCargo == 3){
+        system("cls");
         return 1;
     }
 
@@ -25,20 +28,23 @@ int cadastrar(){
     scanf(" %[^\n]", user.senha);
 
     FILE *fp = fopen(FILE_NAME, "a+");
+    system("cls");
     fprintf(fp, "%d %s %s\n", user.idCargo, user.email, user.senha);
     fclose(fp);
     
     return 0;
+    
 
 }
 
 int login(){
+    system("cls");
     Usuario user, auth;
 
     FILE *fp = fopen(FILE_NAME, "r");
 
     if (fp == NULL){
-        printf("Nenhum usuario foi cadastrado! :()");
+        printf("Nenhum usuario foi cadastrado! :o\n");
         return 1;
 
     }else{
@@ -71,9 +77,9 @@ int login(){
             
         }
         fclose(fp);
+
         return 4;
     }
 
-        
 }
 

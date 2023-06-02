@@ -10,9 +10,11 @@ void main_menu(){
     unsigned int op, id;
     printf("[1]Login\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
+    system("cls");
 
     switch (op){
     case 1:
+
         switch (id=login()){
 
         case 1:
@@ -34,13 +36,14 @@ void main_menu(){
             break;
         }
         break;
-
     case 0:
-        printf("Obrigado e ate a proxima :) ");
+        system("cls");
+        printf("Obrigado e ate a proxima :) \n");
         exit(0);
         break;
 
     default:
+        system("cls");
         printf("Opcao invalida! Tente novamente\n");
         main_menu();
         break;
