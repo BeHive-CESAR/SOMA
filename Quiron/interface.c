@@ -71,3 +71,33 @@ void menu_coordenacao(){
             break;
     }
 }
+
+
+void menu_residente(){
+    unsigned int op;
+
+    printf("[1] Ver atividades\n[2]Visulizar avaliações\n[3]Visualizar feedback\n[4]Avaliaçao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
+    scanf("%d", &op);
+    switch(op) {
+        case 1:
+            ver_atividades();
+            break;
+        case 2:
+            ver_avaliacoes();
+            break;
+        case 3:
+            ver_feedbacks();
+            break;
+        case 4:
+            avaliar_feedback();
+            break;
+        case 0:
+            main_menu();
+            break;
+        default:
+            printf("opçao invalida! tente novamente\n");
+            menu_residente();
+            break;
+    }
+
+}
