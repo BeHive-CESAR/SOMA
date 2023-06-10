@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include "interface.h"
 #include "login_cadastro.h"
+#include "residentes_preceptores.h"
 
-#define TRUE 0
-#define FALSE 1
 
 void main_menu(){
     unsigned int op, id;
@@ -26,7 +25,6 @@ void main_menu(){
             break;
         
         case 3:
-            printf("--- Coordenacao ---\n");
             menu_coordenacao();
             break;
 
@@ -52,23 +50,48 @@ void main_menu(){
 
 void menu_coordenacao(){
     unsigned int op;
-
-    printf("[1]Cadastrar novos usuarios\n[0]Sair da conta\nSelecione o que desejar: ");
+    char opcao;
+    char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
+    char *email;
+    
+    system("cls");
+    printf("--- Coordenacao ---\n");
+    printf("[1]Anestesia\n[2]Cardiologia\n[3]Cirurgia Geral\n[4]Clinica Geral\n[0]Sair da conta\nSelecione o que desejar: ");
     scanf("%d", &op);
 
-    switch(op){
-        case 1:
-            cadastrar();
-            break;
-        
-        case 0:
-            main_menu();
-            break;
-        
-        default:
-            printf("Opcao invalida! Tente novamente\n");
-            menu_coordenacao();
-            break;
+    if (op > 0 && op <= 4){
+        printf("====%s====\n", residencias[op-1]);
+        printf("[+]Cadastrar alunos[/]Voltar[?]Acessar usuario\n");
+
+        printf("Preceptores: \n");
+        printar_residentes_preceptores(op, 1);
+        printf("Residentes: \n");
+        printar_residentes_preceptores(op, 2);
+
+        scanf("\n%c", &opcao);
+        switch(opcao){
+            case '+':
+                cadastrar(op);
+                menu_coordenacao();
+                break;
+
+            case '/':
+                menu_coordenacao();
+                break;
+
+            case '?':
+                printf("Digite o nome do usuario: ");
+                scanf(" %[^\n]", email);
+                // dados do usuario
+            default:
+                printf("Opcao invalida!");
+                menu_coordenacao();
+        }
+    }else if(op == 0){
+        main_menu();
+    }else{
+        printf("Opcao invalida! Tente novamente\n");
+        menu_coordenacao();
     }
 }
 
@@ -80,19 +103,19 @@ void menu_residente(){
     scanf("%d", &op);
     switch(op) {
         case 1:
-            ver_atividades();
+            // ver_atividades();
             break;
         case 2:
-            ver_avaliacoes();
+            // ver_avaliacoes();
             break;
         case 3:
-            ver_feedbacks();
+            // ver_feedbacks();
             break;
         case 4:
-            avaliar_feedback();
+            // avaliar_feedback();
             break;
         case 0:
-            main_menu();
+            // main_menu();
             break;
         default:
             printf("opçao invalida! tente novamente\n");

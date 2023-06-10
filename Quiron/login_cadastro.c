@@ -8,7 +8,7 @@
 #define FILE_NAME "cadastrados.txt"
 
 
-int cadastrar(){
+int cadastrar(int residencia){
 
     Usuario user;
     system("cls");
@@ -29,7 +29,7 @@ int cadastrar(){
 
     FILE *fp = fopen(FILE_NAME, "a+");
     system("cls");
-    fprintf(fp, "%d %s %s\n", user.idCargo, user.email, user.senha);
+    fprintf(fp, "%d %s %s %d\n", user.idCargo, user.email, user.senha, residencia);
     fclose(fp);
     
     return 0;
@@ -43,43 +43,42 @@ int login(){
 
     FILE *fp = fopen(FILE_NAME, "r");
 
+
+    printf("Insira seu E-mail cadastrado: ");
+    scanf(" %[^\n]", user.email);
+
+    printf("Insira sua senha: ");
+    scanf(" %[^\n]", user.senha);
+
+    if (strcmp(user.email, "admin") == 0 && strcmp(user.senha, "admin") == 0){
+        return 3;
+    }
+
     if (fp == NULL){
         printf("Nenhum usuario foi cadastrado! :o\n");
-        return 1;
-
-    }else{
-
-        printf("Insira seu E-mail cadastrado: ");
-        scanf(" %[^\n]", user.email);
-
-        printf("Insira sua senha: ");
-        scanf(" %[^\n]", user.senha);
-
-        if (strcmp(user.email, "admin") == 0 && strcmp(user.senha, "admin") == 0){
-            return 3;
-        }
-
-        char linha[69];
-        while(fgets(linha, 70, fp) != NULL){
-            char* token = strtok(linha, " ");
-
-            auth.idCargo = atoi(token);
-            token = strtok(NULL, " ");
-            strcpy(auth.email, token);
-            token = strtok(NULL, " ");
-            strcpy(auth.senha, token);
-            auth.senha[strlen(auth.senha)-1] = '\0';
-
-            if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
-                fclose(fp);
-                return auth.idCargo;
-            }
-            
-        }
-        fclose(fp);
-
         return 4;
     }
 
+    char linha[69];
+    while(fgets(linha, 70, fp) != NULL){
+        char* token = strtok(linha, " ");
+
+        auth.idCargo = atoi(token);
+        token = strtok(NULL, " ");
+        strcpy(auth.email, token);
+        token = strtok(NULL, " ");
+        strcpy(auth.senha, token);
+        token = strtok(NULL, " ");
+        auth.idResidencia = atoi(token);
+
+        if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
+            fclose(fp);
+            return auth.idCargo;
+        }
+        
+    }
+    fclose(fp);
+
+    return 4;
 }
 
