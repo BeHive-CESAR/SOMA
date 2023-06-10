@@ -6,6 +6,7 @@
 
 
 void main_menu(){
+    system("cls");
     unsigned int op, id;
     printf("[1]Login\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
@@ -17,7 +18,7 @@ void main_menu(){
         switch (id=login()){
 
         case 1:
-            printf("--- Preceptor ---");
+            menu_preceptor();
             break;
         
         case 2:
@@ -61,7 +62,7 @@ void menu_coordenacao(){
 
     if (op > 0 && op <= 4){
         printf("====%s====\n", residencias[op-1]);
-        printf("[+]Cadastrar alunos[/]Voltar[?]Acessar usuario\n");
+        printf("[+]Cadastrar novo usuario[/]Voltar[?]Acessar usuario\n");
 
         printf("Preceptores: \n");
         printar_residentes_preceptores(op, 1);
@@ -123,4 +124,144 @@ void menu_residente(){
             break;
     }
 
+}
+
+void menu_preceptor()
+{
+    unsigned int op;
+    char opcao;
+
+
+    system("cls");
+    printf("--- Preceptor ---\n");
+    printf("[1]Atividades\n[2]Avisos\n[3]Sair da Conta\nSelecione o que desejar: ");
+
+    scanf("%d", &op);
+
+    switch (op)
+    {
+    case 1:
+        //atividades
+        atividades();
+        break;
+    case 2:
+        //avisos
+        avisos_preceptor();
+        break;
+    case 3:
+        //sair
+        main_menu();
+        break;
+    
+    default:
+        printf("Opção inválida! Tente novamente.\n");
+        menu_preceptor();
+        break;
+    }
+}
+
+void atividades()
+{
+    unsigned int op;
+
+    system("cls");
+    printf("--- Atividades ---\n");
+    printf("[1]Exame\n13/06/2023  12:30\nResidente: Vitoria Vaporube\n\n"
+    "[2]Cirurgia\n13/06/2023  12:30\nResidente: Eduarda Souza\n\n"
+    "[3]Estudo de Caso\n13/06/2023  12:30\nResidente: Arthur Figueiredo\n\n"
+    "[4]Sair\n\nSelecione o que desejar: ");
+
+    scanf("%d", &op);
+
+    switch (op)
+    {
+    case 1:
+        //exame
+        opcoes_atividade();
+        break;
+    case 2:
+        //cirurgia
+        opcoes_atividade();
+        break;
+    case 3:
+        //estudo de caso
+        opcoes_atividade();
+        break;
+    case 4:
+        //sair
+        menu_preceptor();
+        break;
+    default:
+        printf("Opção inválida! Tente novamente.\n");
+        atividades();
+        break;
+    }
+}
+
+void opcoes_atividade()
+{
+    char opcao;
+
+    system("cls");
+    printf("\nDescricao:\n(Descricao da Atividade)\n\n[+]Avaliar\n[/]Voltar\nSelecione o que desejar: ");
+    scanf("\n%c", &opcao);
+
+    if(opcao == '+'){
+        avaliar_residente();
+    }
+    else if(opcao == '/'){
+        atividades();
+    }
+    else{
+        printf("Opcao invalida. Tente novamente.\n");
+        atividades();
+    }
+}
+
+void avaliar_residente()
+{
+    char criterio[9][50] = {"Assiduidade", "Pontualidade", "Iniciativa", "Postura Etico-Profissional", "Relacionamento em equipe",
+    "Espirito Critico", "Comunicacao", "Habilidades Especificas", "Participacao nas Atividades"};
+    int nota_criterio[9];
+    char opcao;
+
+    system("cls");
+    printf("--- Avaliacao Pratica | Exame ---\n");
+    printf("Vitoria Vaporube\nTipo de Avaliacao: Pratica");
+
+    for (int i = 0; i < 9; i++)
+    {
+        printf("\n%s: ", criterio[i]);
+        scanf("%d", &nota_criterio[i]);
+    }
+
+    printf("[+]Enviar: ");
+    scanf("\n%c", &opcao);
+    if(opcao == '+'){
+        opcoes_atividade();
+    }
+    else{
+        printf("Opção invalida. Tente novamente.\n");
+        avaliar_residente();
+    }
+    
+}
+
+void avisos_preceptor()
+{
+    unsigned int op;
+
+    system("cls");
+    printf("--- Avisos ---");
+    printf("\nFeedback Disponivel\n(Aviso 1)\n(Aviso 2)");
+    printf("\n[1]Voltar: ");
+
+    scanf("%d", &op);
+    if(op == 1){
+        menu_preceptor();
+    }
+    else{
+        printf("\nOpcao invalida. Tente novamente.");
+        avisos_preceptor();
+    }
 }
