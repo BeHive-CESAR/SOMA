@@ -131,16 +131,16 @@ void menu_residente()
     switch(op) 
     {
         case 1:
-            ver_atividades();
+            ver_atividades_residente();
             break;
         case 2:
             printar_notas_residente(usuario_logado);
             break;
         case 3:
-            ver_feedback();
+            ver_feedback_residente();
             break;
         case 4:
-            avaliar_feedback();
+            fazer_feedback_para_preceptor();
             break;
         case 0:
             main_menu();
