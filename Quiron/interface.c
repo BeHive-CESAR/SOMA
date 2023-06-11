@@ -7,20 +7,24 @@
 
 extern Usuario usuario_logado;
 
+// Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
+// fazer pagina de feedback dos residentes para o preceptor
+// Lembrar de pedir para expandir o terminal para melhor visualização do programa
 
-
-void main_menu(){
+void main_menu()
+{
     system("cls");
     unsigned int op, id;
     printf("[1]Login\n[0]Finalizar Programa\nSelecione o que desejar: ");
     scanf("%d", &op);
     system("cls");
 
-    switch (op){
+    switch (op)
+    {
     case 1:
 
-        switch (id=login()){
-
+        switch (id=login())
+        {
         case 1:
             menu_preceptor();
             break;
@@ -38,7 +42,8 @@ void main_menu(){
             main_menu();
             break;
         }
-        break;
+    break;
+
     case 0:
         system("cls");
         printf("Obrigado e ate a proxima :) \n");
@@ -53,7 +58,8 @@ void main_menu(){
     }
 }
 
-void menu_coordenacao(){
+void menu_coordenacao()
+{
     unsigned int op;
     char opcao;
     char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
@@ -64,7 +70,8 @@ void menu_coordenacao(){
     printf("[1]Anestesia\n[2]Cardiologia\n[3]Cirurgia Geral\n[4]Clinica Geral\n[0]Sair da conta\nSelecione o que desejar: ");
     scanf("%d", &op);
 
-    if (op > 0 && op <= 4){
+    if (op > 0 && op <= 4)
+    {
         printf("====%s====\n", residencias[op-1]);
         printf("[+]Cadastrar novo usuario[/]Voltar[?]Acessar usuario\n");
 
@@ -74,7 +81,8 @@ void menu_coordenacao(){
         printar_residentes_preceptores(op, 2);
 
         scanf("\n%c", &opcao);
-        switch(opcao){
+        switch(opcao)
+        {
             case '+':
                 cadastrar(op);
                 menu_coordenacao();
@@ -92,16 +100,21 @@ void menu_coordenacao(){
                 printf("Opcao invalida!");
                 menu_coordenacao();
         }
-    }else if(op == 0){
+    }
+    else if(op == 0)
+    {
         main_menu();
-    }else{
+    }
+    else
+    {
         printf("Opcao invalida! Tente novamente\n");
         menu_coordenacao();
     }
 }
 
 
-void menu_residente(){
+void menu_residente()
+{
     unsigned int op;
     char opcao;
     char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
@@ -191,9 +204,9 @@ void atividades()
     system("cls");
     printf("--- Atividades ---\n");
     printf("[1]Exame\n13/06/2023  12:30\n\n"
-    "[2]Cirurgia\n13/06/2023  12:30\n\n"
-    "[3]Estudo de Caso\n13/06/2023  12:30\n\n"
-    "[4]Sair\n\nSelecione o que desejar: ");
+            "[2]Cirurgia\n13/06/2023  12:30\n\n"
+            "[3]Estudo de Caso\n13/06/2023  12:30\n\n"
+            "[4]Sair\n\nSelecione o que desejar: ");
 
     scanf("%d", &op);
 
@@ -230,13 +243,16 @@ void opcoes_atividade()
     printf("\nDescricao:\n(Descricao da Atividade)\n\n[+]Avaliar\n[/]Voltar\nSelecione o que desejar: ");
     scanf("\n%c", &opcao);
 
-    if(opcao == '+'){
+    if(opcao == '+')
+    {
         avaliar_residente();
     }
-    else if(opcao == '/'){
+    else if(opcao == '/')
+    {
         atividades();
     }
-    else{
+    else
+    {
         printf("Opcao invalida. Tente novamente.\n");
         atividades();
     }
@@ -318,7 +334,8 @@ void avisos_preceptor()
     }
 }
 
-void salvar_nota_residente(Usuario residente_selecionado, char* nota) {
+void salvar_nota_residente(Usuario residente_selecionado, char* nota) 
+{
     FILE *fp = fopen("notas_residentes.txt", "a"); // abrir o arquivo em modo anexação
     if(fp == NULL) 
     {
@@ -370,8 +387,7 @@ void lista_residentes()
     fclose(fp);
     perfil_residente(residente_selecionado, auth);
 }
-// Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
-// fazer pagina de feedback dos residentes para o preceptor
+
 void perfil_residente(Usuario residente_selecionado, Usuario auth)
 {
     system("cls");
@@ -408,10 +424,11 @@ void perfil_residente(Usuario residente_selecionado, Usuario auth)
     printar_notas_residente(residente_selecionado);
 }
 
-void printar_grafico() {
+void printar_grafico() 
+{
 
     int max = 0;
-    int valores[9] = {5, 3, 5, 5, 2, 3, 4, 3, 5};
+    int valores[9] = {5, 3, 5, 5, 2, 3, 4, 3, 5}; // Valores pre definidos por nos | Puramente estetico
     int tamanho = 9;
 
     for(int i = 0; i < tamanho; i++) 
@@ -440,7 +457,7 @@ void printar_grafico() {
     }
     printf("\n");
 }
-// Lembrar de pedir para expandir o terminal para melhor visualização do programa
+
 void printar_notas_residente(Usuario residente_selecionado)
 {
     FILE *fp = fopen("notas_residentes.txt", "r");
@@ -488,22 +505,26 @@ int residente_existe(Usuario residente_selecionado)
     return 0;  // não encontrado
 }
 
-void ver_atividades() {
+void ver_atividades_residente() 
+{
     FILE *fp = fopen("atividades.txt", "r");
-    if (fp == NULL) {
+    if (fp == NULL) 
+    {
         printf("Nao foi possivel abrir o arquivo de atividades.\n");
         return;
     }
 
     char linha[100];
-    while (fgets(linha, sizeof(linha), fp) != NULL) {
+    while (fgets(linha, sizeof(linha), fp) != NULL) 
+    {
         printf("%s", linha);
     }
 
     fclose(fp);
 }
 
-void ver_feedback() {
+void ver_feedback_residente() 
+{
     FILE *fp = fopen("feedback.txt", "r");
     if (fp == NULL) {
         printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
@@ -518,7 +539,8 @@ void ver_feedback() {
     fclose(fp);
 }
 
-char* converter_avaliacao_para_texto(int avaliacao) {
+char* converter_avaliacao_para_texto(int avaliacao) 
+{
     switch(avaliacao) {
         case 1: return "Muito Ruim";
         case 2: return "Ruim";
@@ -529,7 +551,7 @@ char* converter_avaliacao_para_texto(int avaliacao) {
     }
 }
 
-void avaliar_feedback()
+void fazer_feedback_para_preceptor()
 {
     Usuario preceptor_selecionado;
     char criterio[7][50] = {"Relacionamento com os residentes", "Assiduidade", "Metodologia de ensino", 
