@@ -26,7 +26,7 @@ void main_menu(){
             break;
         
         case 2:
-            printf("--- Residente ---");
+            menu_residente();
             break;
         
         case 3:
@@ -103,26 +103,34 @@ void menu_coordenacao(){
 
 void menu_residente(){
     unsigned int op;
+    char opcao;
+    char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
 
-    printf("[1]Ver atividades\n[2]Visulizar avaliações\n[3]Visualizar feedback\n"
-    "[4]Avaliaçao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
+
+    system("cls");
+    printf("--- Residentes ---\n");
+    printf("%s\n", usuario_logado.email);
+    printf("%s | Residentes", residencias[usuario_logado.idResidencia -1]);
+
+    printf("[1]Ver atividades\n[2]Visulizar avaliacoes\n[3]Visualizar feedback\n"
+    "[4]Avaliacao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
     scanf("%d", &op);
     switch(op) 
     {
         case 1:
-            // ver_atividades();
+            ver_atividades();
             break;
         case 2:
-            // ver_avaliacoes();
+            printar_notas_residente(usuario_logado);
             break;
         case 3:
-            // ver_feedbacks();
+            ver_feedback();
             break;
         case 4:
-            // avaliar_feedback();
+            avaliar_feedback();
             break;
         case 0:
-            // main_menu();
+            main_menu();
             break;
         default:
             printf("opçao invalida! tente novamente\n");
@@ -478,4 +486,122 @@ int residente_existe(Usuario residente_selecionado)
 
     fclose(fp);
     return 0;  // não encontrado
+}
+
+void ver_atividades() {
+    FILE *fp = fopen("atividades.txt", "r");
+    if (fp == NULL) {
+        printf("Nao foi possivel abrir o arquivo de atividades.\n");
+        return;
+    }
+
+    char linha[100];
+    while (fgets(linha, sizeof(linha), fp) != NULL) {
+        printf("%s", linha);
+    }
+
+    fclose(fp);
+}
+
+void ver_feedback() {
+    FILE *fp = fopen("feedback.txt", "r");
+    if (fp == NULL) {
+        printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
+        return;
+    }
+
+    char linha[100];
+    while (fgets(linha, sizeof(linha), fp) != NULL) {
+        printf("%s", linha);
+    }
+
+    fclose(fp);
+}
+
+void avaliar_feedback()
+{
+    Usuario preceptor_selecionado;
+    char criterio[7][50] = {"Relacionamento com os residentes", "Assiduidade", "Metodologia de ensino", 
+                            "Nivel de conhecimento", "Pontualidade", "Esclarecimento de duvidas",
+                            "Incentiva a participacao do aluno"};
+    char avaliacao_criterio[7][50];
+    char opcao;
+
+    printf("Qual o email do preceptor que voce deseja avaliar? ");
+    scanf(" %[^\n]", preceptor_selecionado.email);
+
+    system("cls");
+    printf("--- Avaliacao de Feedback ---\n");
+    printf("%s\n", preceptor_selecionado.email);
+
+    for (int i = 0; i < 7; i++)
+    {
+        printf("\n%s: ", criterio[i]);
+        printf("\n[1] Muito Ruim\n[2] Ruim\n[3] Moderado\n[4] Bom\n[5] Muito Bom\nSelecione a avaliacao: ");
+        scanf("%s", avaliacao_criterio[i]);
+        int avaliacao = atoi(avaliacao_criterio[i]);
+        if(avaliacao < 1 || avaliacao > 5)
+        {
+            printf("\nAvaliacao invalida! Apenas avaliacoes entre 1 e 5.");
+            avaliar_feedback();
+        }
+    }
+
+    printf("[+]Enviar: ");
+    scanf("\n%c", &opcao);
+    if(opcao == '+'){
+        for (int i = 0; i < 7; i++)
+        {
+            salvar_avaliacao_preceptor(preceptor_selecionado, avaliacao_criterio[i]);
+        }
+        printf("\nAvaliacoes atribuidas com sucesso!");
+        menu_residente();
+    }
+    else
+    {
+        printf("Opcao invalida. Tente novamente.\n");
+        avaliar_feedback();
+    }
+    
+}
+
+void salvar_avaliacao_preceptor(Usuario preceptor_selecionado, char* avaliacao)
+{
+    FILE *fp = fopen("avaliacao_preceptor.txt", "r");
+    if(fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo.\n");
+        return;
+    }
+
+    char linhas[100][100];
+    int num_linhas = 0;
+
+    char linha[100];
+    while(fgets(linha, sizeof(linha), fp) != NULL) 
+    {
+        if(strstr(linha, preceptor_selecionado.email) != NULL) 
+        {
+            linha[strcspn(linha, "\n")] = 0;
+            strcat(linha, " ");
+            strcat(linha, avaliacao);
+        }
+        strcpy(linhas[num_linhas++], linha);
+    }
+
+    fclose(fp);
+
+    fp = fopen("notas_residentes.txt", "w");
+    if(fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo.\n");
+        return;
+    }
+
+    for(int i = 0; i < num_linhas; i++) 
+    {
+        fputs(linhas[i], fp);
+    }
+
+    fclose(fp);
 }
