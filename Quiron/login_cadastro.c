@@ -7,6 +7,7 @@
 
 #define FILE_NAME "cadastrados.txt"
 
+Usuario usuario_logado;
 
 int cadastrar(int residencia){
 
@@ -81,6 +82,7 @@ int login(){
         auth.idResidencia = atoi(token);
 
         if(strcmp(auth.email, user.email) == 0 && strcmp(auth.senha, user.senha) == 0){
+            def_usuario_logado(auth);
             fclose(fp);
             return auth.idCargo;
         }
@@ -91,3 +93,8 @@ int login(){
     return 4;
 }
 
+void def_usuario_logado(Usuario auth)
+{
+    strcpy(usuario_logado.email, auth.email);
+    usuario_logado.idResidencia = auth.idResidencia;
+}

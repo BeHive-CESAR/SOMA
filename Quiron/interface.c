@@ -5,6 +5,9 @@
 #include "login_cadastro.h"
 #include "residentes_preceptores.h"
 
+extern Usuario usuario_logado;
+
+
 
 void main_menu(){
     system("cls");
@@ -101,9 +104,11 @@ void menu_coordenacao(){
 void menu_residente(){
     unsigned int op;
 
-    printf("[1] Ver atividades\n[2]Visulizar avaliações\n[3]Visualizar feedback\n[4]Avaliaçao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
+    printf("[1]Ver atividades\n[2]Visulizar avaliações\n[3]Visualizar feedback\n"
+    "[4]Avaliaçao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
     scanf("%d", &op);
-    switch(op) {
+    switch(op) 
+    {
         case 1:
             // ver_atividades();
             break;
@@ -131,12 +136,15 @@ void menu_preceptor()
 {
     unsigned int op;
     char opcao;
+    char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
 
 
     system("cls");
     printf("--- Preceptor ---\n");
-    printf("[1]Atividades\n[2]Avisos\n[3]Lista dos Residentes\n[4]Sair da Conta\nSelecione o que desejar: ");
+    printf("%s\n", usuario_logado.email);
+    printf("%s | Preceptor", residencias[usuario_logado.idResidencia -1]);
 
+    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Residentes\n[4]Sair da Conta\nSelecione o que deseja: ");
     scanf("%d", &op);
 
     switch (op)
@@ -162,7 +170,7 @@ void menu_preceptor()
         break;
     
     default:
-        printf("Opção inválida! Tente novamente.\n");
+        printf("Opcao invalida! Tente novamente.\n");
         menu_preceptor();
         break;
     }
@@ -174,9 +182,9 @@ void atividades()
 
     system("cls");
     printf("--- Atividades ---\n");
-    printf("[1]Exame\n13/06/2023  12:30\nResidente: Vitoria Vaporube\n\n"
-    "[2]Cirurgia\n13/06/2023  12:30\nResidente: Eduarda Souza\n\n"
-    "[3]Estudo de Caso\n13/06/2023  12:30\nResidente: Arthur Figueiredo\n\n"
+    printf("[1]Exame\n13/06/2023  12:30\n\n"
+    "[2]Cirurgia\n13/06/2023  12:30\n\n"
+    "[3]Estudo de Caso\n13/06/2023  12:30\n\n"
     "[4]Sair\n\nSelecione o que desejar: ");
 
     scanf("%d", &op);
@@ -200,7 +208,7 @@ void atividades()
         menu_preceptor();
         break;
     default:
-        printf("Opção inválida! Tente novamente.\n");
+        printf("Opcao invalida! Tente novamente.\n");
         atividades();
         break;
     }
@@ -233,6 +241,7 @@ void avaliar_residente()
     "Espirito Critico", "Comunicacao", "Habilidades Especificas", "Participacao nas Atividades"};
     char nota_criterio[9][50];
     char opcao;
+    float media_residente = 0;
 
     printf("Qual o email do residente que voce deseja avaliar? ");
     scanf(" %[^\n]", residente_selecionado.email);
@@ -244,27 +253,31 @@ void avaliar_residente()
     for (int i = 0; i < 9; i++)
     {
         printf("\n%s: ", criterio[i]);
-        scanf("%s", nota_criterio[i]);
-        if((int) nota_criterio[i] < 1 || (int) nota_criterio[i] > 5)
+        scanf(" %s", nota_criterio[i]);
+        int verificar = nota_criterio[i][0] - '0';
+        if(verificar < 1 || strlen(nota_criterio[i]) > 1 || verificar > 5)
         {
-            printf("\nNota invalida! Apenas notas entre 1 e 5.");
+            printf("\nNota invalida! Apenas notas entre 1 e 5.\n");
             avaliar_residente();
         }
     }
 
-    printf("[+]Enviar: ");
+    printf("[+]Enviar: \n[/]Cancelar: ");
     scanf("\n%c", &opcao);
     if(opcao == '+'){
         for (int i = 0; i < 9; i++)
         {
-            salvar_nota_residente(residente_selecionado, nota_criterio[i]);
+            media_residente += (nota_criterio[i][0] - '0') * 2;
         }
+        media_residente /= 9;
+        char media_char[10];
+        sprintf(media_char, "%.2f", media_residente);
+        salvar_nota_residente(residente_selecionado, media_char);
         printf("\nNotas atribuidas com sucesso!");
         opcoes_atividade();
     }
     else
     {
-        printf("Opção invalida. Tente novamente.\n");
         avaliar_residente();
     }
     
@@ -296,7 +309,7 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     FILE *fp = fopen("notas_residentes.txt", "r");
     if(fp == NULL) 
     {
-        printf("Não foi possível abrir o arquivo.\n");
+        printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
 
@@ -310,6 +323,8 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
         {
             linha[strcspn(linha, "\n")] = 0;
             strcat(linha, " ");
+            strcat(linha, usuario_logado.email);
+            strcat(linha, " ");
             strcat(linha, nota);
         }
         strcpy(linhas[num_linhas++], linha);
@@ -320,7 +335,7 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     fp = fopen("notas_residentes.txt", "w");
     if(fp == NULL) 
     {
-        printf("Não foi possível abrir o arquivo.\n");
+        printf("Nao foi possível abrir o arquivo.\n");
         return;
     }
 
@@ -334,7 +349,7 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
 
 void lista_residentes()
 {
-    Usuario user, auth;   
+    Usuario user, auth, residente_selecionado;   
 
     FILE *fp = fopen("cadastrados.txt", "r");
 
@@ -351,18 +366,116 @@ void lista_residentes()
         token = strtok(NULL, " ");
         auth.idResidencia = atoi(token);
         // checagem da residencia aqui
-        if(auth.idCargo == 2 && auth.idResidencia == 1)
+        if(auth.idCargo == 2 && auth.idResidencia == usuario_logado.idResidencia)
         {
             printf("%s\n", auth.email);
         }
     }
+    printf("Selecione o residente que deseja visualizar: ");
+    scanf(" %[^\n]", residente_selecionado.email);
     fclose(fp);
-    // fazer checagem se é da mesma residencia que o preceptor logado
-    // fazer com que consiga selecionar o residente da lista
-    // fazer a visualização individual do residente escolhido
-    // fazer pagina da avaliação geral do residente escolhido
-    // fazer a função para mostrar as avaliações individuais de cada preceptor
+    perfil_residente(residente_selecionado, auth);
 }
-
+// fazer checagem se é da mesma residencia que o preceptor logado (ok)
+// fazer com que consiga selecionar o residente da lista (ok)
+// fazer a visualização individual do residente escolhido
+// fazer pagina da avaliação geral do residente escolhido
+// fazer a função para mostrar as avaliações individuais de cada preceptor
 // Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
 // fazer pagina de feedback dos residentes para o preceptor
+void perfil_residente(Usuario residente_selecionado, Usuario auth)
+{
+    system("cls");
+    printf("--- Avaliacao Geral ---");
+    printf("\n%s", residente_selecionado.email);
+
+    switch (auth.idResidencia)
+    {
+    case 0:
+        // Anestesia
+        printf("\nAnestesia | Residente");
+        break;
+    case 1:
+        // Cardiologia
+        printf("\nCardiologia | Residente");
+        break;
+    case 2:
+        // Cirurgia geral
+        printf("\nCirurgia geral | Residente");
+        break;
+    case 3:
+        // Clinica Geral
+        printf("\nClinica Geral | Residente");
+        break;
+    
+    default:
+        printf("\nResidentecia invalida. Tente novamente");
+        lista_residentes();
+        break;
+    }
+    printf("\n\n--- Grafico de Notas ---\n\n");
+    printar_grafico();
+    printf("\nAvalicoes Individuais");
+    printar_notas_residente(residente_selecionado);
+}
+
+void printar_grafico() {
+
+    int max = 0;
+    int valores[9] = {5, 3, 5, 5, 2, 3, 4, 3, 5};
+    int tamanho = 9;
+
+    for(int i = 0; i < tamanho; i++) 
+    {
+        if(valores[i] > max) 
+        {
+            max = valores[i];
+        }
+    }
+    // Desenha o gráfico
+    for(int i = 0; i < tamanho; i++) 
+    {
+        printf("%2d | ", i + 1);
+        int barra = (valores[i] * 50) / max;  
+        for(int j = 0; j < barra; j++) 
+        {
+            printf("#");
+        }
+        printf(" %d\n", valores[i]);
+    }
+    // Desenha a linha inferior
+    printf("    ");
+    for(int i = 0; i < 52; i++) 
+    {
+        printf("-");
+    }
+    printf("\n");
+}
+// Lembrar de pedir para expandir o terminal para melhor visualização do programa
+void printar_notas_residente(Usuario residente_selecionado)
+{
+    FILE *fp = fopen("notas_residentes.txt", "r");
+
+    char linha[69];
+    char nome_preceptor[69];
+    char nome_residente[69];
+    float nota_residente;
+
+    while(fgets(linha, 70, fp) != NULL)
+    {
+        char* token = strtok(linha, " ");
+
+        strcpy(nome_residente, token);
+        token = strtok(NULL, " ");
+        strcpy(nome_preceptor, token);
+        token = strtok(NULL, " ");
+        nota_residente = atof(token);  // Use atof para converter string para float
+
+        if(strcmp(nome_residente, residente_selecionado.email) == 0)  // Use == 0 para verificar se as strings são iguais
+        {
+            printf("\n%s %0.2f", nome_preceptor, nota_residente);
+        }
+        
+    }
+    fclose(fp);
+}

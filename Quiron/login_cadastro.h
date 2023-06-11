@@ -9,3 +9,5 @@ typedef struct {
 
 int cadastrar(int);
 int login();
+
+void def_usuario_logado();
