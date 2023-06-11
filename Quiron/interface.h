@@ -15,3 +15,4 @@ void lista_residentes();
 void perfil_residente();
 void printar_grafico();
 void printar_notas_residente();
+int residente_existe();

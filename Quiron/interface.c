@@ -245,6 +245,12 @@ void avaliar_residente()
 
     printf("Qual o email do residente que voce deseja avaliar? ");
     scanf(" %[^\n]", residente_selecionado.email);
+    
+    if(residente_existe(residente_selecionado) == 0) 
+    {
+        printf("\nResidente nao encontrado! Tente novamente.\n");
+        avaliar_residente();
+    }
 
     system("cls");
     printf("--- Avaliacao Pratica | Exame ---\n");
@@ -264,7 +270,8 @@ void avaliar_residente()
 
     printf("[+]Enviar: \n[/]Cancelar: ");
     scanf("\n%c", &opcao);
-    if(opcao == '+'){
+    if(opcao == '+')
+    {
         for (int i = 0; i < 9; i++)
         {
             media_residente += (nota_criterio[i][0] - '0') * 2;
@@ -280,7 +287,6 @@ void avaliar_residente()
     {
         avaliar_residente();
     }
-    
 }
 
 void avisos_preceptor()
@@ -342,16 +348,20 @@ void lista_residentes()
             printf("%s\n", auth.email);
         }
     }
+
     printf("Selecione o residente que deseja visualizar: ");
     scanf(" %[^\n]", residente_selecionado.email);
+
+    if(residente_existe(residente_selecionado) == 0) 
+    {
+        printf("\nResidente nao encontrado! Tente novamente.\n");
+        strcpy(residente_selecionado.email, NULL);
+        fclose(fp);
+        lista_residentes();
+    }
     fclose(fp);
     perfil_residente(residente_selecionado, auth);
 }
-// fazer checagem se é da mesma residencia que o preceptor logado (ok)
-// fazer com que consiga selecionar o residente da lista (ok)
-// fazer a visualização individual do residente escolhido
-// fazer pagina da avaliação geral do residente escolhido
-// fazer a função para mostrar as avaliações individuais de cada preceptor
 // Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
 // fazer pagina de feedback dos residentes para o preceptor
 void perfil_residente(Usuario residente_selecionado, Usuario auth)
@@ -448,4 +458,24 @@ void printar_notas_residente(Usuario residente_selecionado)
         }   
     }
     fclose(fp);
+}
+
+int residente_existe(Usuario residente_selecionado) 
+{
+    FILE *fp = fopen("cadastrados.txt", "r");
+    char linha[69];
+    char email[50];
+
+    while (fgets(linha, sizeof(linha), fp)) 
+    {
+        sscanf(linha, "%*d %s", email);  // ignora o primeiro campo e lê o segundo (email)
+        if (strcmp(email, residente_selecionado.email) == 0) 
+        {
+            fclose(fp);
+            return 1;  // encontrado
+        }
+    }
+
+    fclose(fp);
+    return 0;  // não encontrado
 }
