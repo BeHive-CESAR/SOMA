@@ -246,7 +246,6 @@ void avaliar_residente()
     printf("Qual o email do residente que voce deseja avaliar? ");
     scanf(" %[^\n]", residente_selecionado.email);
 
-    system("cls");
     printf("--- Avaliacao Pratica | Exame ---\n");
     printf("%s\nTipo de Avaliacao: Pratica", residente_selecionado.email);
 
@@ -349,10 +348,10 @@ void lista_residentes()
 }
 // fazer checagem se é da mesma residencia que o preceptor logado (ok)
 // fazer com que consiga selecionar o residente da lista (ok)
-// fazer a visualização individual do residente escolhido
-// fazer pagina da avaliação geral do residente escolhido
-// fazer a função para mostrar as avaliações individuais de cada preceptor
-// Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
+// fazer a visualização individual do residente escolhido (ok)
+// fazer pagina da avaliação geral do residente escolhido (ok)
+// fazer a função para mostrar as avaliações individuais de cada preceptor (ok)
+// Ao atribuir a nota, especificar qual foi o preceptor que atribuiu (ok)
 // fazer pagina de feedback dos residentes para o preceptor
 void perfil_residente(Usuario residente_selecionado, Usuario auth)
 {
@@ -449,3 +448,4 @@ void printar_notas_residente(Usuario residente_selecionado)
     }
     fclose(fp);
 }
+
