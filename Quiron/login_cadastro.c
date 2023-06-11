@@ -31,6 +31,15 @@ int cadastrar(int residencia){
     system("cls");
     fprintf(fp, "%d %s %s %d\n", user.idCargo, user.email, user.senha, residencia);
     fclose(fp);
+
+    if(user.idCargo == 2)
+    {
+        FILE *fp = fopen("notas_residentes.txt", "a+");
+        system("cls");
+        fprintf(fp, "%s\n", user.email);
+        fclose(fp);
+    }
+
     
     return 0;
     

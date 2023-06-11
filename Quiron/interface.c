@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "interface.h"
 #include "login_cadastro.h"
 #include "residentes_preceptores.h"
@@ -220,27 +221,42 @@ void opcoes_atividade()
 
 void avaliar_residente()
 {
+    Usuario residente_selecionado;
     char criterio[9][50] = {"Assiduidade", "Pontualidade", "Iniciativa", "Postura Etico-Profissional", "Relacionamento em equipe",
     "Espirito Critico", "Comunicacao", "Habilidades Especificas", "Participacao nas Atividades"};
-    int nota_criterio[9];
+    char nota_criterio[9][50];
     char opcao;
+
+    printf("Qual o email do residente que voce deseja avaliar? ");
+    scanf(" %[^\n]", residente_selecionado.email);
 
     system("cls");
     printf("--- Avaliacao Pratica | Exame ---\n");
-    printf("Vitoria Vaporube\nTipo de Avaliacao: Pratica");
+    printf("%s\nTipo de Avaliacao: Pratica", residente_selecionado.email);
 
     for (int i = 0; i < 9; i++)
     {
         printf("\n%s: ", criterio[i]);
-        scanf("%d", &nota_criterio[i]);
+        scanf("%s", nota_criterio[i]);
+        if(nota_criterio[i] < 1 || nota_criterio[i] > 5)
+        {
+            printf("\nNota invalida! Apenas notas entre 1 e 5.");
+            avaliar_residente();
+        }
     }
 
     printf("[+]Enviar: ");
     scanf("\n%c", &opcao);
     if(opcao == '+'){
+        for (int i = 0; i < 9; i++)
+        {
+            salvar_nota_residente(residente_selecionado, nota_criterio[i]);
+        }
+        printf("\nNotas atribuidas com sucesso!");
         opcoes_atividade();
     }
-    else{
+    else
+    {
         printf("Opção invalida. Tente novamente.\n");
         avaliar_residente();
     }
@@ -257,11 +273,54 @@ void avisos_preceptor()
     printf("\n[1]Voltar: ");
 
     scanf("%d", &op);
-    if(op == 1){
+    if(op == 1)
+    {
         menu_preceptor();
     }
-    else{
+    else
+    {
         printf("\nOpcao invalida. Tente novamente.");
         avisos_preceptor();
     }
+}
+
+void salvar_nota_residente(Usuario residente_selecionado, char* nota)
+{
+    FILE *fp = fopen("notas_residentes.txt", "r");
+    if(fp == NULL) 
+    {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    char linhas[100][100];
+    int num_linhas = 0;
+
+    char linha[100];
+    while(fgets(linha, sizeof(linha), fp) != NULL) 
+    {
+        if(strstr(linha, residente_selecionado.email) != NULL) 
+        {
+            linha[strcspn(linha, "\n")] = 0;
+            strcat(linha, " ");
+            strcat(linha, nota);
+        }
+        strcpy(linhas[num_linhas++], linha);
+    }
+
+    fclose(fp);
+
+    fp = fopen("notas_residentes.txt", "w");
+    if(fp == NULL) 
+    {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for(int i = 0; i < num_linhas; i++) 
+    {
+        fputs(linhas[i], fp);
+    }
+
+    fclose(fp);
 }
