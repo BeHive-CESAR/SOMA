@@ -304,45 +304,16 @@ void avisos_preceptor()
     }
 }
 
-void salvar_nota_residente(Usuario residente_selecionado, char* nota)
-{
-    FILE *fp = fopen("notas_residentes.txt", "r");
+void salvar_nota_residente(Usuario residente_selecionado, char* nota) {
+    FILE *fp = fopen("notas_residentes.txt", "a"); // abrir o arquivo em modo anexação
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
 
-    char linhas[100][100];
-    int num_linhas = 0;
-
-    char linha[100];
-    while(fgets(linha, sizeof(linha), fp) != NULL) 
-    {
-        if(strstr(linha, residente_selecionado.email) != NULL) 
-        {
-            linha[strcspn(linha, "\n")] = 0;
-            strcat(linha, " ");
-            strcat(linha, usuario_logado.email);
-            strcat(linha, " ");
-            strcat(linha, nota);
-        }
-        strcpy(linhas[num_linhas++], linha);
-    }
-
-    fclose(fp);
-
-    fp = fopen("notas_residentes.txt", "w");
-    if(fp == NULL) 
-    {
-        printf("Nao foi possível abrir o arquivo.\n");
-        return;
-    }
-
-    for(int i = 0; i < num_linhas; i++) 
-    {
-        fputs(linhas[i], fp);
-    }
+    // escrever os detalhes no final do arquivo
+    fprintf(fp, "\n%s %s %s", residente_selecionado.email, usuario_logado.email, nota);
 
     fclose(fp);
 }
@@ -365,7 +336,7 @@ void lista_residentes()
         strcpy(auth.senha, token);
         token = strtok(NULL, " ");
         auth.idResidencia = atoi(token);
-        // checagem da residencia aqui
+
         if(auth.idCargo == 2 && auth.idResidencia == usuario_logado.idResidencia)
         {
             printf("%s\n", auth.email);
@@ -469,13 +440,12 @@ void printar_notas_residente(Usuario residente_selecionado)
         token = strtok(NULL, " ");
         strcpy(nome_preceptor, token);
         token = strtok(NULL, " ");
-        nota_residente = atof(token);  // Use atof para converter string para float
+        nota_residente = atof(token);
 
-        if(strcmp(nome_residente, residente_selecionado.email) == 0)  // Use == 0 para verificar se as strings são iguais
+        if(strcmp(nome_residente, residente_selecionado.email) == 0)
         {
             printf("\n%s %0.2f", nome_preceptor, nota_residente);
-        }
-        
+        }   
     }
     fclose(fp);
 }
