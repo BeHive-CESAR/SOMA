@@ -350,13 +350,19 @@ void lista_residentes()
         strcpy(auth.senha, token);
         token = strtok(NULL, " ");
         auth.idResidencia = atoi(token);
-        // fazer checagem se é da mesma residencia que o preceptor logado
+        // checagem da residencia aqui
         if(auth.idCargo == 2 && auth.idResidencia == 1)
         {
             printf("%s\n", auth.email);
         }
     }
     fclose(fp);
-    // fazer com que consiga selecionar o residente
-    // fazer a visualização individual do residente
+    // fazer checagem se é da mesma residencia que o preceptor logado
+    // fazer com que consiga selecionar o residente da lista
+    // fazer a visualização individual do residente escolhido
+    // fazer pagina da avaliação geral do residente escolhido
+    // fazer a função para mostrar as avaliações individuais de cada preceptor
 }
+
+// Ao atribuir a nota, especificar qual foi o preceptor que atribuiu
+// fazer pagina de feedback dos residentes para o preceptor
