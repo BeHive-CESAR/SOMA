@@ -110,10 +110,10 @@ void menu_residente(){
     system("cls");
     printf("--- Residentes ---\n");
     printf("%s\n", usuario_logado.email);
-    printf("%s | Residentes", residencias[usuario_logado.idResidencia -1]);
+    printf("%s | Residentes\n", residencias[usuario_logado.idResidencia -1]);
 
     printf("[1]Ver atividades\n[2]Visulizar avaliacoes\n[3]Visualizar feedback\n"
-    "[4]Avaliacao do feedback\n[0]Sair da conta\nSelecione qual opçao deseja visualizar: ");
+    "[4]Avaliacao do feedback\n[0]Sair da conta\nSelecione qual opcao deseja visualizar: ");
     scanf("%d", &op);
     switch(op) 
     {
@@ -518,6 +518,17 @@ void ver_feedback() {
     fclose(fp);
 }
 
+char* converter_avaliacao_para_texto(int avaliacao) {
+    switch(avaliacao) {
+        case 1: return "Muito Ruim";
+        case 2: return "Ruim";
+        case 3: return "Moderado";
+        case 4: return "Bom";
+        case 5: return "Muito Bom";
+        default: return "Invalido";
+    }
+}
+
 void avaliar_feedback()
 {
     Usuario preceptor_selecionado;
@@ -547,6 +558,10 @@ void avaliar_feedback()
         }
     }
 
+    char comentario[100];
+    printf("\nDigite um comentario sobre o preceptor: ");
+    scanf(" %[^\n]", comentario);
+
     printf("[+]Enviar: ");
     scanf("\n%c", &opcao);
     if(opcao == '+'){
@@ -554,7 +569,10 @@ void avaliar_feedback()
         {
             salvar_avaliacao_preceptor(preceptor_selecionado, avaliacao_criterio[i]);
         }
-        printf("\nAvaliacoes atribuidas com sucesso!");
+        // Salve o comentário como uma avaliação
+        salvar_avaliacao_preceptor(preceptor_selecionado, comentario);
+        
+        printf("\nAvaliacoes e comentario atribuidos com sucesso!");
         menu_residente();
     }
     else
@@ -562,12 +580,20 @@ void avaliar_feedback()
         printf("Opcao invalida. Tente novamente.\n");
         avaliar_feedback();
     }
-    
 }
+
 
 void salvar_avaliacao_preceptor(Usuario preceptor_selecionado, char* avaliacao)
 {
-    FILE *fp = fopen("avaliacao_preceptor.txt", "r");
+    FILE *fp = fopen("avaliacao_preceptor.txt", "a+");
+    if(fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo.\n");
+        return;
+    }
+    fclose(fp);
+
+    fp = fopen("avaliacao_preceptor.txt", "r");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
@@ -576,31 +602,47 @@ void salvar_avaliacao_preceptor(Usuario preceptor_selecionado, char* avaliacao)
 
     char linhas[100][100];
     int num_linhas = 0;
+    int preceptor_found = 0;
 
     char linha[100];
     while(fgets(linha, sizeof(linha), fp) != NULL) 
     {
+        linha[strcspn(linha, "\n")] = 0;  // remover a nova linha do final
+        if(strlen(linha) == 0) 
+        {
+            continue;  // ignorar linhas vazias
+        }
+
         if(strstr(linha, preceptor_selecionado.email) != NULL) 
         {
-            linha[strcspn(linha, "\n")] = 0;
             strcat(linha, " ");
             strcat(linha, avaliacao);
+            preceptor_found = 1;
         }
+        strcpy(linhas[num_linhas++], linha);
+    }
+
+    if(!preceptor_found)  // se o preceptor não foi encontrado, adicione uma nova linha para ele
+    {
+        strcpy(linha, preceptor_selecionado.email);
+        strcat(linha, " ");
+        strcat(linha, avaliacao);
         strcpy(linhas[num_linhas++], linha);
     }
 
     fclose(fp);
 
-    fp = fopen("notas_residentes.txt", "w");
+    fp = fopen("avaliacao_preceptor.txt", "w");
     if(fp == NULL) 
     {
-        printf("Nao foi possivel abrir o arquivo.\n");
+        printf("Nao foi possivel abrir o arquivo para escrita.\n");
         return;
     }
 
     for(int i = 0; i < num_linhas; i++) 
     {
         fputs(linhas[i], fp);
+        fputs("\n", fp);
     }
 
     fclose(fp);
