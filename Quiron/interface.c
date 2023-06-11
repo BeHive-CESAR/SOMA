@@ -135,7 +135,7 @@ void menu_preceptor()
 
     system("cls");
     printf("--- Preceptor ---\n");
-    printf("[1]Atividades\n[2]Avisos\n[3]Sair da Conta\nSelecione o que desejar: ");
+    printf("[1]Atividades\n[2]Avisos\n[3]Lista dos Residentes\n[4]Sair da Conta\nSelecione o que desejar: ");
 
     scanf("%d", &op);
 
@@ -145,11 +145,18 @@ void menu_preceptor()
         //atividades
         atividades();
         break;
+
     case 2:
         //avisos
         avisos_preceptor();
         break;
+
     case 3:
+        //residentes
+        lista_residentes();
+        break;
+
+    case 4:
         //sair
         main_menu();
         break;
@@ -238,7 +245,7 @@ void avaliar_residente()
     {
         printf("\n%s: ", criterio[i]);
         scanf("%s", nota_criterio[i]);
-        if(nota_criterio[i] < 1 || nota_criterio[i] > 5)
+        if((int) nota_criterio[i] < 1 || (int) nota_criterio[i] > 5)
         {
             printf("\nNota invalida! Apenas notas entre 1 e 5.");
             avaliar_residente();
@@ -323,4 +330,33 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     }
 
     fclose(fp);
+}
+
+void lista_residentes()
+{
+    Usuario user, auth;   
+
+    FILE *fp = fopen("cadastrados.txt", "r");
+
+    char linha[69];
+    while(fgets(linha, 70, fp) != NULL)
+    {
+        char* token = strtok(linha, " ");
+
+        auth.idCargo = atoi(token);
+        token = strtok(NULL, " ");
+        strcpy(auth.email, token);
+        token = strtok(NULL, " ");
+        strcpy(auth.senha, token);
+        token = strtok(NULL, " ");
+        auth.idResidencia = atoi(token);
+        // fazer checagem se é da mesma residencia que o preceptor logado
+        if(auth.idCargo == 2 && auth.idResidencia == 1)
+        {
+            printf("%s\n", auth.email);
+        }
+    }
+    fclose(fp);
+    // fazer com que consiga selecionar o residente
+    // fazer a visualização individual do residente
 }

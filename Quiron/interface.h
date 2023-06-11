@@ -11,3 +11,4 @@ void opcoes_atividade();
 void avaliar_residente();
 void avisos_preceptor();
 void salvar_nota_residente();
+void lista_residentes();
