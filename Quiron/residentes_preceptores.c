@@ -40,3 +40,15 @@ void printar_residentes_preceptores(int residencia, int cargo){
 
     
 }
+
+char* converter_avaliacao_para_texto(int avaliacao) 
+{
+    switch(avaliacao) {
+        case 1: return "Muito Ruim";
+        case 2: return "Ruim";
+        case 3: return "Moderado";
+        case 4: return "Bom";
+        case 5: return "Muito Bom";
+        default: return "Invalido";
+    }
+}

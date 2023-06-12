@@ -3,7 +3,7 @@
 
 
 // Para executar o main escreva no terminal:
-// gcc -o run main.c login_cadastro.c interface.c residentes_preceptores.c
+// gcc -o run main.c login_cadastro.c interface.c residentes_preceptores.c preceptor.c residente.c
 
 int main(){
     main_menu();

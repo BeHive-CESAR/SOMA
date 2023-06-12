@@ -1,0 +1,12 @@
+void atividades();
+void opcoes_atividade();
+void avaliar_residente();
+void avisos_preceptor();
+void salvar_nota_residente(Usuario residente_selecionado, char* nota);
+void lista_residentes();
+void perfil_residente(Usuario residente_selecionado, Usuario auth);
+void printar_grafico();
+void printar_notas_residente(Usuario residente_selecionado);
+int residente_existe(Usuario residente_selecionado);
+void fazer_feedback_para_residente();
+void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedback);

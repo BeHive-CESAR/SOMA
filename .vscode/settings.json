@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "login_cadastro.h": "c",
+        "preceptor.h": "c",
+        "interface.h": "c"
+    }
+}
