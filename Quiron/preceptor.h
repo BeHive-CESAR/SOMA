@@ -10,4 +10,5 @@ void printar_grafico();
 void printar_notas_residente(Usuario residente_selecionado);
 int residente_existe(Usuario residente_selecionado);
 void fazer_feedback_para_residente();
-void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedback);
+void salvar_feedback_residente(Usuario residente_selecionado, char* nota);
+void ver_feedback_preceptor();

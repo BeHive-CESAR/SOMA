@@ -7,9 +7,23 @@
 #include "residentes_preceptores.h"
 #include "interface.h"
 
+// Coisas do Preceptor
+// fazer pagina de feedback dos residentes para o preceptor -> em processo (peu)
+// checar se caso digite um numero maior que 5 e menor que 1, na proximo vez digitar o numero certo e ter certeza que o numero correto ira para o txt na funcao fazer_feedback_para_residente
+// Falta apenas a função de fazer a visualização do feedback que os residentes fizeram do preceptor
+// Na funcao fazer_feedback_para_residente apos confirmar o envio do feedback o programa encerra. why?
+// Adicionar o nome do preceptor que esta fazendo o feedback ao residente no arquivo de feedback_preceptor
+// funcao fazer_feedback_para_residente nao esta funcionando corretamente. 
+    // 1. o comentario que é adicionado primeiro fica se repetindo em todos os outros feedbacks
+    // 2. Esta apagando qualquer residente que ja estivesse presente no arquivo
+// função de perfil de residente encerra o programa após mostrar o perfil do residente | deveria voltar para a funcao de lista_residentes
+// atualmente a funcao de fazer_feedback_para_residente() esta gravando o nome que foi 
+
+
 extern Usuario usuario_logado;
 
-#define MAX 10 // ver com linhos qual foi o valor que ele definou para MAX
+#define MAX 70
+#define MAX_CRITERIOS 6
 
 void ver_atividades_preceptor()
 {
@@ -286,7 +300,7 @@ void perfil_residente(Usuario residente_selecionado, Usuario auth)
         break;
     
     default:
-        printf("\nResidentecia invalida. Tente novamente");
+        printf("\nResidente invalido. Tente novamente");
         lista_residentes();
         break;
     }
@@ -382,53 +396,56 @@ int residente_existe(Usuario residente_selecionado)
 void fazer_feedback_para_residente()
 {
     Usuario residente_selecionado;
-    char criterios[6][80] = {
-        "O residente apresenta uma boa relacao com outros residentes e preceptores",
-        "O residente eh assiduo", 
-        "O residente se mostra interessado no assunto passado", 
-        "O residente apresenta um bom conhecimento no assunto", 
-        "O residente eh pontual",
-        "O residente eh engajado e participativo",
-        };
-    char nota_feedback[6][50];
+    char criterios[MAX_CRITERIOS][80] = {
+                            "O residente apresenta uma boa relacao com outros residentes e preceptores",
+                            "O residente eh assiduo", 
+                            "O residente se mostra interessado no assunto passado", 
+                            "O residente apresenta um bom conhecimento no assunto", 
+                            "O residente eh pontual",
+                            "O residente eh engajado e participativo",
+                            };
+    char nota_feedback[MAX_CRITERIOS][50];
     char opcao;
 
     printf("Qual o email do residente que voce deseja avaliar? ");
     scanf(" %[^\n]", residente_selecionado.email);
 
     system("cls");
-    printf("--- Feedback para Residente ---\n");
+    printf("---Feedback para Residente---\n");
     printf("%s\n", residente_selecionado.email);
 
-    for (int i = 0; i < 6; i++) 
+    for (int i = 0; i < MAX_CRITERIOS; i++)
     {
         printf("\n%s: ", criterios[i]);
         printf("\n[1] Muito Ruim\n[2] Ruim\n[3] Moderado\n[4] Bom\n[5] Muito Bom\nSelecione a avaliacao: ");
         scanf("%s", nota_feedback[i]);
-        int int_nota_feedback = atoi(nota_feedback[i]);
-        if(int_nota_feedback < 1 || int_nota_feedback > 5)
+        int int_nota_criterio = atoi(nota_feedback[i]);
+        if(int_nota_criterio < 1 || int_nota_criterio > 5)
         {
-            printf("\nNumero invalido! Apenas numeros entre 1 e 5.");
+            printf("\nNota invalida! Apenas notas entre 1 e 5.");
             fazer_feedback_para_residente();
         }
     }
 
     char comentario[100];
-    printf("\nObservacoes: ");
+    printf("\nDigite um comentario sobre o residente: ");
     scanf(" %[^\n]", comentario);
 
     printf("[+]Enviar: ");
-    printf("\n[/]Cancelar: "); // ver se isso aqui esta embaixo um do outro
     scanf("\n%c", &opcao);
     if(opcao == '+')
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < MAX_CRITERIOS; i++)
         {
             salvar_feedback_residente(residente_selecionado, nota_feedback[i]);
         }
-        salvar_feedback_residente(residente_selecionado, comentario); // Salva o comentário como uma avaliação
+        // Salva o comentário como um comentario
+        salvar_feedback_residente(residente_selecionado, comentario);
+        // Salva o nome do preceptor que esta logado e realizou o feedback
+        salvar_feedback_residente(residente_selecionado, usuario_logado.email);
+
         
-        printf("\nAvaliacoes e comentario atribuidos com sucesso!");
+        printf("\nFeedback e observacao atribuidos com sucesso!");
         menu_preceptor();
     }
     else
@@ -438,7 +455,8 @@ void fazer_feedback_para_residente()
     }
 }
 
-void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedback)
+
+void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
 {
     FILE *fp = fopen("feedback_preceptor.txt", "a+");
     if(fp == NULL) 
@@ -448,7 +466,7 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedbac
     }
     fclose(fp);
 
-    fp = fopen("feedback_preceptor.txt", "r"); 
+    fp = fopen("feedback_preceptor.txt", "r");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
@@ -457,7 +475,7 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedbac
 
     char linhas[100][100];
     int num_linhas = 0;
-    int residente_existe = 0;
+    int achou_residente = 0;
 
     char linha[100];
     while(fgets(linha, sizeof(linha), fp) != NULL) 
@@ -465,39 +483,70 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota_feedbac
         linha[strcspn(linha, "\n")] = 0;  // remove a nova linha do final
         if(strlen(linha) == 0) 
         {
-            continue;  // ignora linhas vazias
+            continue;  // ignora as linhas vazias
         }
 
-        if(strstr(linha, residente_selecionado.email) != NULL)
+        if(strstr(linha, residente_selecionado.email) != NULL) 
         {
             strcat(linha, " ");
-            strcat(linha, nota_feedback);
-            residente_existe = 1;
+            strcat(linha, nota);
+            achou_residente = 1;
         }
         strcpy(linhas[num_linhas++], linha);
     }
 
-    if(!residente_existe)  // se nao encontrar o residente no arquivo, adiciona uma nova linha para ele
+    if(!achou_residente)  // nao encontrou o residente, adiciona uma nova linha para ele
     {
         strcpy(linha, residente_selecionado.email);
         strcat(linha, " ");
-        strcat(linha, nota_feedback);
+        strcat(linha, nota);
         strcpy(linhas[num_linhas++], linha);
     }
 
     fclose(fp);
 
-    fp = fopen("feedback_preceptor.txt", "w"); 
+    fp = fopen("feedback_preceptor.txt", "w");
     if(fp == NULL) 
     {
-        printf("Nao foi possivel abrir o arquivo.\n");
+        printf("Nao foi possivel abrir o arquivo para escrita.\n");
         return;
     }
 
-    for(int i = 0; i < num_linhas; i++)
+    for(int i = 0; i < num_linhas; i++) 
     {
         fputs(linhas[i], fp);
         fputs("\n", fp);
+    }
+
+    fclose(fp);
+}
+
+void ver_feedback_preceptor()
+{
+    char criterios[7][50] = {"Relacionamento com os residentes", "Assiduidade", "Metodologia de ensino", 
+                            "Nivel de conhecimento", "Pontualidade", "Esclarecimento de duvidas",
+                            "Incentiva a participacao do aluno"};
+    char opcao;
+
+    FILE *fp = fopen("avaliacao_preceptor.txt", "r");
+    if (fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
+        return;
+    }
+
+    char ignorado[100];
+    fscanf(fp, "%s", ignorado); // ignora a primeira palavra do arquivo
+
+    int nota;
+    int contador = 0;
+    printf("Anonimo\n");
+    while (fscanf(fp, "%d", &nota) == 1) 
+    {
+        printf("%s: ", criterios[contador]);
+        char* feedback_texto = converter_feedback_para_texto(nota);
+        printf("%s\n", feedback_texto);
+        contador++;
     }
     fclose(fp);
 }

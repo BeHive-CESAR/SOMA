@@ -20,25 +20,6 @@ extern Usuario usuario_logado;
 // Quando o feedback fica disponivel, quem adiciona o feedback? Seja para o preceptor ou residente, mas quem adiciona o feedback na pagina de avisos?
 // Na pagina de avisos aparece apenas Feedback disponivel. Deveria ter algum botao para ser apertado? Atualmente apenas esta um aviso. Acredito que nao seja muito "claro" de que o usuario deve apertar no aviso em si
 
-// Coisas do Residente
-// colocar opcao de cancelar o envio das notas do feedback na funcao fazer_feedback_para_preceptor
-// mudar o conteudo da variavel criterio para ficar de acordo com o figma
-// mudar printf na função fazer_feedback_para_preceptor para ficar de acordo com o figma
-// mudar nome das variaveis na funcao fazer_feedback_para_preceptor. Atualmente esta vago/confuso o que cada variavel faz e é
-// mudar printf dentro do if de checagem 1 < || > 5 para numero, visto que usuario nao digita a avaliacao e sim o numero que deseja
-// mudar printf de fazer comentario sobre o preceptor na funcao fazer_feedback_para_preceptor para ficar de acordo com o figma 
-// Verificar se peu colocou as #include dos arquivos .h na ordem correta, com suas dependencias verificadas para estar na ordem de quem depende de quem
-
-// Coisas do Preceptor
-// fazer pagina de feedback dos residentes para o preceptor -> em processo (peu)
-// checar se caso digite um numero maior que 5 e menor que 1, na proximo vez digitar o numero certo e ter certeza que o numero correto ira para o txt na funcao fazer_feedback_para_residente
-// Falta apenas a função de fazer a visualização do feedback que os residentes fizeram do preceptor
-// Na funcao fazer_feedback_para_residente apos confirmar o envio do feedback o programa encerra. why?
-// Adicionar o nome do preceptor que esta fazendo o feedback ao residente no arquivo de feedback_preceptor
-// funcao fazer_feedback_para_residente nao esta funcionando corretamente. 
-    // 1. o comentario que é adicionado primeiro fica se repetindo em todos os outros feedbacks
-    // 2. Esta apagando qualquer residente que ja estivesse presente no arquivo
-
 
 void main_menu()
 {
@@ -204,7 +185,7 @@ void menu_preceptor()
     printf("%s\n", usuario_logado.email);
     printf("%s | Preceptor", residencias[usuario_logado.idResidencia -1]);
 
-    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Residentes\n[5]Sair da Conta\nSelecione o que deseja: ");
+    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Ver Feedbacks\n[5]Lista de Residentes\n[6]Sair da Conta\nSelecione o que deseja: ");
     scanf("%d", &op);
 
     switch (op)
@@ -223,16 +204,22 @@ void menu_preceptor()
         //Nova atividade
         criar_atividade();
         break;
-
+    
     case 4:
+        //Ver feedbacks
+        ver_feedback_preceptor();
+        break;
+
+    case 5:
         //residentes
         lista_residentes();
         break;
 
-    case 5:
+    case 6:
         //sair
         main_menu();
         break;
+        
     default:
         printf("Opcao invalida! Tente novamente.\n");
         menu_preceptor();
