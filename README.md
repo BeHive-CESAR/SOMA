@@ -51,8 +51,11 @@ Nesse código desenvolvido na linguagem C criamos um protótipo ilustrativo de c
   <dt>Coordenação</dt>
   <dd>A principio a interface da coordenação será acessada com um login e senha predefinidos `(admin, admin)`. Uma vez acessado, a    coordenação terá permissão de visualizar todas as informações dos residentes e preceptores, alem de poder cadastrar novos usuarios e criar novas atividades para os residentes.</dd>
   <dt>Preceptor</dt>
+  <dd>Após a realização, por parte da coordenação, do cadastro do preceptor com seu email e senha, o mesmo poderá acessar a interface ao fazer o login. Já dentro de sua interface o usuario terá a opção de criar atividades, visualizar e avaliar os residentes dentro de sua residencia, além de fornecer feedbacks para seus alunos, e ver feedbacks recebidos.</dd>
+  <dt>Residente</dt>
   <dd> </dd>
-  Residente
   
 </dl>
+
+
 <p><a href="https://sites.google.com/cesar.school/qiron/início?authuser=1">Link para nosso site</a></p>
