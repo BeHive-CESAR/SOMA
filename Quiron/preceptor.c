@@ -22,17 +22,22 @@
 
 extern Usuario usuario_logado;
 
+<<<<<<< HEAD
 #define MAX 70
 #define MAX_CRITERIOS 6
+=======
+#define MAX 70 // ver com linhos qual foi o valor que ele definou para MAX
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
 
 void ver_atividades_preceptor()
 {
-    system("cls");
+    
     printf("--- Atividades ---\n");
 
     FILE *fp = fopen("atividades.txt", "r"); 
 
     if (fp == NULL) {
+        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
         menu_preceptor();
         return;
@@ -64,19 +69,21 @@ void ver_atividades_preceptor()
     }
     else
     {
-        ver_atividades_preceptor();
+        system("cls");
+        menu_preceptor();
     }
 
 }
 
 void criar_atividade()
 {
-    system("cls");
+    
     printf("--- Criar Atividade ---\n");
     FILE *fp = fopen("atividades.txt", "a"); 
 
     if(fp == NULL) 
     {
+        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
@@ -114,6 +121,7 @@ void criar_atividade()
 
     fclose(fp);
 
+    system("cls");
     menu_preceptor();
 }
 
@@ -121,20 +129,22 @@ void opcoes_atividade()
 {
     char opcao;
 
-    system("cls");
     printf("\nDescricao:\n(Descricao da Atividade)\n\n[+]Avaliar\n[/]Voltar\nSelecione o que desejar: ");
     scanf("\n%c", &opcao);
 
     if(opcao == '+')
     {
+        system("cls");
         avaliar_residente();
     }
     else if(opcao == '/')
     {
+        system("cls");
         ver_atividades_preceptor();
     }
     else
     {
+        system("cls");
         printf("Opcao invalida. Tente novamente.\n");
         ver_atividades_preceptor();
     }
@@ -142,6 +152,8 @@ void opcoes_atividade()
 
 void avaliar_residente()
 {
+    system("cls");
+
     Usuario residente_selecionado;
     char criterio[9][50] = {"Assiduidade", "Pontualidade", "Iniciativa", "Postura Etico-Profissional", "Relacionamento em equipe",
     "Espirito Critico", "Comunicacao", "Habilidades Especificas", "Participacao nas Atividades"};
@@ -154,11 +166,11 @@ void avaliar_residente()
     
     if(residente_existe(residente_selecionado) == 0) 
     {
+        system("cls");
         printf("\nResidente nao encontrado! Tente novamente.\n");
         avaliar_residente();
     }
 
-    system("cls");
     printf("--- Avaliacao Pratica | Exame ---\n");
     printf("%s\nTipo de Avaliacao: Pratica", residente_selecionado.email);
 
@@ -169,6 +181,7 @@ void avaliar_residente()
         int verificar = nota_criterio[i][0] - '0';
         if(verificar < 1 || strlen(nota_criterio[i]) > 1 || verificar > 5)
         {
+            system("cls");
             printf("\nNota invalida! Apenas notas entre 1 e 5.\n");
             avaliar_residente();
         }
@@ -183,10 +196,15 @@ void avaliar_residente()
             media_residente += (nota_criterio[i][0] - '0') * 2;
         }
         media_residente /= 9;
+
         char media_char[10];
+
         sprintf(media_char, "%.2f", media_residente);
         salvar_nota_residente(residente_selecionado, media_char);
+
+        system("cls");
         printf("\nNotas atribuidas com sucesso!");
+
         opcoes_atividade();
     }
     else
@@ -199,7 +217,6 @@ void avisos_preceptor()
 {
     unsigned int op;
 
-    system("cls");
     printf("--- Avisos ---");
     printf("\nFeedback Disponivel");
     printf("\n[1]Realizar Feedback: ");
@@ -208,14 +225,17 @@ void avisos_preceptor()
     scanf("%d", &op);
     if(op == 1) // realiza o feedback
     {
+        system("cls");
         fazer_feedback_para_residente();
     }
     else if(op == 2) // volta para a tela anterior
     {
+        system("cls");
         menu_preceptor();
     }
     else // opcao invalida
     {
+        system("cls");
         printf("\nOpcao invalida. Tente novamente.");
         avisos_preceptor();
     }
@@ -226,13 +246,19 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     FILE *fp = fopen("notas_residentes.txt", "a"); // abre o arquivo em modo anexação
     if(fp == NULL) 
     {
+        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
 
-    fprintf(fp, "\n%s %s %s", residente_selecionado.email, usuario_logado.email, nota);
+
+    fprintf(fp, "%s %s %s\n", residente_selecionado.email, usuario_logado.email, nota);
 
     fclose(fp);
+
+    printf("Notas atribuídas com sucesso\n");
+    system("cls");
+
 }
 
 void lista_residentes()
@@ -265,18 +291,20 @@ void lista_residentes()
 
     if(residente_existe(residente_selecionado) == 0) 
     {
+        system("cls");
         printf("\nResidente nao encontrado! Tente novamente.\n");
         strcpy(residente_selecionado.email, NULL);
         fclose(fp);
         lista_residentes();
     }
     fclose(fp);
+    system("cls");
     perfil_residente(residente_selecionado, auth);
+    
 }
 
 void perfil_residente(Usuario residente_selecionado, Usuario auth)
 {
-    system("cls");
     printf("--- Avaliacao Geral ---");
     printf("\n%s", residente_selecionado.email);
 
@@ -300,10 +328,16 @@ void perfil_residente(Usuario residente_selecionado, Usuario auth)
         break;
     
     default:
+<<<<<<< HEAD
         printf("\nResidente invalido. Tente novamente");
+=======
+        system("cls");
+        printf("\nResidentecia invalida. Tente novamente");
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
         lista_residentes();
         break;
     }
+
     printf("\n\n--- Grafico de Notas ---\n\n");
     printar_grafico();
     printf("\nAvalicoes Individuais");
@@ -335,6 +369,7 @@ void printar_grafico()
         }
         printf(" %d\n", valores[i]);
     }
+
     // Desenha a linha inferior
     printf("    ");
     for(int i = 0; i < 52; i++) 
@@ -396,6 +431,7 @@ int residente_existe(Usuario residente_selecionado)
 void fazer_feedback_para_residente()
 {
     Usuario residente_selecionado;
+<<<<<<< HEAD
     char criterios[MAX_CRITERIOS][80] = {
                             "O residente apresenta uma boa relacao com outros residentes e preceptores",
                             "O residente eh assiduo", 
@@ -405,6 +441,18 @@ void fazer_feedback_para_residente()
                             "O residente eh engajado e participativo",
                             };
     char nota_feedback[MAX_CRITERIOS][50];
+=======
+    char criterios[6][80] = {
+        "O residente apresenta uma boa relacao com outros residentes e preceptores",
+        "O residente eh assiduo", 
+        "O residente se mostra interessado no assunto passado", 
+        "O residente apresenta um bom conhecimento no assunto", 
+        "O residente eh pontual",
+        "O residente eh engajado e participativo",
+        };
+
+    char nota_feedback[6][50];
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
     char opcao;
 
     printf("Qual o email do residente que voce deseja avaliar? ");
@@ -422,7 +470,12 @@ void fazer_feedback_para_residente()
         int int_nota_criterio = atoi(nota_feedback[i]);
         if(int_nota_criterio < 1 || int_nota_criterio > 5)
         {
+<<<<<<< HEAD
             printf("\nNota invalida! Apenas notas entre 1 e 5.");
+=======
+            system("cls");
+            printf("\nNumero invalido! Apenas numeros entre 1 e 5.");
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
             fazer_feedback_para_residente();
         }
     }
@@ -432,6 +485,10 @@ void fazer_feedback_para_residente()
     scanf(" %[^\n]", comentario);
 
     printf("[+]Enviar: ");
+<<<<<<< HEAD
+=======
+    printf("\n[/]Cancelar: "); 
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
     scanf("\n%c", &opcao);
     if(opcao == '+')
     {
@@ -445,12 +502,22 @@ void fazer_feedback_para_residente()
         salvar_feedback_residente(residente_selecionado, usuario_logado.email);
 
         
+<<<<<<< HEAD
         printf("\nFeedback e observacao atribuidos com sucesso!");
+=======
+        system("cls");
+        printf("\nAvaliacoes e comentario atribuidos com sucesso!");
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
         menu_preceptor();
     }
-    else
+    else if(opcao == '/')
     {
-        printf("Opcao invalida. Tente novamente.\n");
+        system("cls");
+        fazer_feedback_para_residente();
+    }
+    else{
+        system("cls");
+        printf("Opcao invalida, tente novamente");
         fazer_feedback_para_residente();
     }
 }
@@ -461,16 +528,19 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     FILE *fp = fopen("feedback_preceptor.txt", "a+");
     if(fp == NULL) 
     {
+        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
-        return;
+        fazer_feedback_para_residente();
+        
     }
     fclose(fp);
 
     fp = fopen("feedback_preceptor.txt", "r");
     if(fp == NULL) 
     {
+        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
-        return;
+        fazer_feedback_para_residente();
     }
 
     char linhas[100][100];
@@ -508,8 +578,14 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     fp = fopen("feedback_preceptor.txt", "w");
     if(fp == NULL) 
     {
+<<<<<<< HEAD
         printf("Nao foi possivel abrir o arquivo para escrita.\n");
         return;
+=======
+        system("cls");
+        printf("Nao foi possivel abrir o arquivo.\n");
+        fazer_feedback_para_residente();
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
     }
 
     for(int i = 0; i < num_linhas; i++) 
@@ -518,6 +594,7 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
         fputs("\n", fp);
     }
 
+<<<<<<< HEAD
     fclose(fp);
 }
 
@@ -548,5 +625,11 @@ void ver_feedback_preceptor()
         printf("%s\n", feedback_texto);
         contador++;
     }
+=======
+>>>>>>> 94e1965b77b1f7d46be096be0968a90d7068ff82
     fclose(fp);
+    system("cls");
+
+    printf("\nFeedback realizado com sucesso!");
+    fazer_feedback_para_residente();
 }
