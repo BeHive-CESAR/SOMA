@@ -57,7 +57,7 @@ void ver_atividades_preceptor()
     char opcao;
 
     printf("\n[+]Avaliar residente [/]Voltar\nSelecione o que desejar: ");
-    scanf("%c", &opcao);
+    scanf("\n%c", &opcao);
 
     if (opcao == '+')
     {
@@ -172,11 +172,11 @@ void avaliar_residente()
 
         char media_char[10];
 
-        sprintf(media_char, "%.2f", media_residente);
+        sprintf(media_char, "%.2f\n", media_residente);
         salvar_nota_residente(residente_selecionado, media_char);
 
         system("cls");
-        printf("\nNotas atribuidas com sucesso!");
+        printf("\nNotas atribuidas com sucesso!\n");
 
         ver_atividades_preceptor();
     }
@@ -226,7 +226,7 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     }
 
 
-    fprintf(fp, "%s %s %s\n", residente_selecionado.email, usuario_logado.email, nota);
+    fprintf(fp, "%s %s %s", residente_selecionado.email, usuario_logado.email, nota);
 
     fclose(fp);
 
