@@ -1,4 +1,5 @@
-void atividades();
+void ver_atividades_preceptor();
+void criar_atividade();
 void opcoes_atividade();
 void avaliar_residente();
 void avisos_preceptor();

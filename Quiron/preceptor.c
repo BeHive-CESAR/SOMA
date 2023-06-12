@@ -9,42 +9,98 @@
 
 extern Usuario usuario_logado;
 
-void atividades()
-{
-    unsigned int op;
+#define MAX 10 // ver com linhos qual foi o valor que ele definou para MAX
 
+void ver_atividades_preceptor()
+{
     system("cls");
     printf("--- Atividades ---\n");
-    printf("[1]Exame\n13/06/2023  12:30\n\n"
-            "[2]Cirurgia\n13/06/2023  12:30\n\n"
-            "[3]Estudo de Caso\n13/06/2023  12:30\n\n"
-            "[4]Sair\n\nSelecione o que desejar: ");
 
-    scanf("%d", &op);
+    FILE *fp = fopen("atividades.txt", "r"); 
 
-    switch (op)
-    {
-    case 1:
-        //exame
-        opcoes_atividade();
-        break;
-    case 2:
-        //cirurgia
-        opcoes_atividade();
-        break;
-    case 3:
-        //estudo de caso
-        opcoes_atividade();
-        break;
-    case 4:
-        //sair
+    if (fp == NULL) {
+        printf("Nao foi possivel abrir o arquivo.\n");
         menu_preceptor();
-        break;
-    default:
-        printf("Opcao invalida! Tente novamente.\n");
-        atividades();
-        break;
+        return;
     }
+
+    char linha[MAX];
+    while (fgets(linha, MAX, fp) != NULL) {
+        char primeiraPalavra = strtok(linha, " ");
+        if (strcmp(primeiraPalavra, usuario_logado.email) == 0) {
+            char* palavra = strtok(NULL, " "); 
+            while (palavra != NULL) {
+                printf("\n%s", palavra);
+                palavra = strtok(NULL, " "); 
+            }
+
+        }
+    }
+
+    fclose(fp);
+
+    char opcao;
+
+    printf("\n[+]Avaliar residente [/]Voltar\nSelecione o que desejar: ");
+    scanf("%c", &opcao);
+
+    if (opcao == '+')
+    {
+        avaliar_residente();
+    }
+    else
+    {
+        ver_atividades_preceptor();
+    }
+
+}
+
+void criar_atividade()
+{
+    system("cls");
+    printf("--- Criar Atividade ---\n");
+    FILE *fp = fopen("atividades.txt", "a"); 
+
+    if(fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo.\n");
+        return;
+    }
+
+    char nome_atividade[MAX], data_atividade[MAX], residente_atividade[MAX], descricao_atividade[MAX], pontuacao_atividade[MAX];
+    char preceptor_responsavel[MAX];
+    strcpy(preceptor_responsavel, usuario_logado.email);
+
+
+    printf("Favor, substituir 'espaco' por ''\n");
+
+    //Preceptor responsavel
+    fprintf(fp, "%s", usuario_logado.email);
+
+    printf("Nome da atividade: ");
+    scanf(" %[^\n]", nome_atividade);
+    fprintf(fp, " %s", nome_atividade);
+
+    printf("Data de entrega: ");
+    scanf(" %[^\n]", data_atividade);
+    fprintf(fp, " %s", data_atividade);
+
+    printf("Residentes: ");
+    scanf(" %[^\n]", residente_atividade);
+    fprintf(fp, " %s", residente_atividade);
+
+    printf("Descricao: ");
+    scanf(" %[^\n]", descricao_atividade);
+    fprintf(fp, " %s", descricao_atividade);
+
+    printf("Pontuacao: ");
+    scanf("%s", pontuacao_atividade);
+    fprintf(fp, " %s\n", pontuacao_atividade);
+
+
+    fclose(fp);
+
+    menu_preceptor();
 }
 
 void opcoes_atividade()

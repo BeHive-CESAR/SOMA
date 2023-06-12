@@ -159,9 +159,9 @@ void menu_residente()
     scanf("%d", &op);
     switch(op) 
     {
-        case 1:
-            ver_atividades_residente();
-            break;
+        // case 1:
+        //     ver_atividades_residente();
+        //     break;
         case 2:
             printar_notas_residente(usuario_logado);
             break;
@@ -194,14 +194,14 @@ void menu_preceptor()
     printf("%s\n", usuario_logado.email);
     printf("%s | Preceptor", residencias[usuario_logado.idResidencia -1]);
 
-    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Residentes\n[4]Sair da Conta\nSelecione o que deseja: ");
+    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Residentes\n[5]Sair da Conta\nSelecione o que deseja: ");
     scanf("%d", &op);
 
     switch (op)
     {
     case 1:
         //atividades
-        atividades();
+        ver_atividades_preceptor();
         break;
 
     case 2:
@@ -210,15 +210,19 @@ void menu_preceptor()
         break;
 
     case 3:
+        //Nova atividade
+        criar_atividade();
+        break;
+
+    case 4:
         //residentes
         lista_residentes();
         break;
 
-    case 4:
+    case 5:
         //sair
         main_menu();
         break;
-    
     default:
         printf("Opcao invalida! Tente novamente.\n");
         menu_preceptor();
