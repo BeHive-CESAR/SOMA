@@ -187,7 +187,7 @@ void menu_preceptor() //Função responsável pela interface do menu do precepto
     printf("%s | Preceptor", residencias[usuario_logado.idResidencia -1]);
 
     printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Ver Feedbacks\n[5]Lista de Residentes" //opções disponíveis
-    "\n[6]Sair da Conta\nSelecione o que deseja: ");
+    "\n[0]Sair da Conta\nSelecione o que deseja: ");
 
     scanf("%d", &op);
 
@@ -218,7 +218,7 @@ void menu_preceptor() //Função responsável pela interface do menu do precepto
         lista_residentes();
         break;
 
-    case 6:
+    case 0:
         //sair
         main_menu();
         break;

@@ -275,6 +275,10 @@ void lista_residentes()
     fclose(fp);
     system("cls");
     perfil_residente(residente_selecionado, auth);
+    printf("\n[/]Para voltar ");
+    char voltar;
+    scanf("\n%c", &voltar);
+    menu_preceptor();
     
 }
 
