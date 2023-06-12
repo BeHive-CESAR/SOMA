@@ -51,7 +51,7 @@ Nesse código desenvolvido na linguagem C criamos um prototipo ilustrativo de co
 <h3>Interfaces do nosso sistema: </h3><br>
 <dl>
   <dt>Coordenação</dt>
-  <dd>A principio a interface da coordenação será acessada com um login e senha predefinidos `(admin, admin)`. Uma vez acessado, a    coordenação terá permissão de visualizar todas as informações dos residentes e preceptores, alem de poder cadastrar novos usuarios e criar novas atividades para os residentes.</dd>
+  <dd>A principio a interface da coordenação será acessada com um login e senha predefinidos <em><strong>(admin, admin)</strong></em>. Uma vez acessado, a    coordenação terá permissão de visualizar todas as informações dos residentes e preceptores, alem de poder cadastrar novos usuarios e criar novas atividades para os residentes.</dd>
   <dt>Preceptor</dt>
   <dd>Após a realização, por parte da coordenação, do cadastro do preceptor com seu email e senha, o mesmo poderá acessar a interface ao fazer o login. Já dentro de sua interface o usuario terá a opção de criar atividades, visualizar e avaliar os residentes dentro de sua residencia, além de fornecer feedbacks para seus alunos, e ver feedbacks recebidos.</dd>
   <dt>Residente</dt>
@@ -60,7 +60,7 @@ Nesse código desenvolvido na linguagem C criamos um prototipo ilustrativo de co
 
 <h3>Como usar nosso sistema</h3>
 
-> A forma mais fácil é simplesmnete executar o executavel `SOMA.exe`
+> A forma mais fácil é simplesmente executar `SOMA.exe`
 
 Mas para realizar a efetiva compilação do nosso código é simples.
 - Estando dentro da pasta Quiron (`cd Quiron` no terminal)
