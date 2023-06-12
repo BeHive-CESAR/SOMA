@@ -99,7 +99,7 @@ void fazer_feedback_para_preceptor()
             salvar_feedback_preceptor(preceptor_selecionado, criterio[i], avaliacao_criterio[i]);
         }
         
-        salvar_feedback_preceptor(preceptor_selecionado, "Comentário", comentario);
+        salvar_feedback_preceptor(preceptor_selecionado, "Comentario", comentario);
         
         printf("\nAvaliacoes e comentario atribuidos com sucesso!");
         menu_residente();

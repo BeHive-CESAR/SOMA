@@ -530,35 +530,30 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
 
 void ver_feedback_preceptor()
 {
-    char criterios[7][50] = {"Relacionamento com os residentes", "Assiduidade", "Metodologia de ensino", 
-                            "Nivel de conhecimento", "Pontualidade", "Esclarecimento de duvidas",
-                            "Incentiva a participacao do aluno"};
+    system("cls");
     char opcao;
+    char linha[69];
+    FILE *fp = fopen("feedback_residente.txt", "r");
 
-    FILE *fp = fopen("avaliacao_preceptor.txt", "r");
     if (fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
         return;
     }
 
-    char ignorado[100];
-    fscanf(fp, "%s", ignorado); // ignora a primeira palavra do arquivo
-
-    int nota;
-    int contador = 0;
     printf("Anonimo\n");
-    while (fscanf(fp, "%d", &nota) == 1) 
+
+    while (fgets(linha, 70, fp) != NULL) 
     {
-        printf("%s: ", criterios[contador]);
-        char* feedback_texto = converter_feedback_para_texto(nota);
-        printf("%s\n", feedback_texto);
-        contador++;
+        printf("%s", linha);
     }
+
     fclose(fp);
 
     printf("\nDeseja voltar?\n[/] Voltar: ");
     scanf(" %c", &opcao);
 
-    fazer_feedback_para_residente();
+    menu_preceptor();
 }
+
+ 
