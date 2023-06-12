@@ -93,6 +93,7 @@ void menu_coordenacao()
     char opcao;
     char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
     char *email;
+    Usuario usuario_desejado;
     
     system("cls");
     printf("--- Coordenacao ---\n");
@@ -122,9 +123,18 @@ void menu_coordenacao()
                 break;
 
             case '?':
-                printf("Digite o nome do usuario: ");
-                scanf(" %[^\n]", email);
-                // dados do usuario
+                printf("Selecione o usuario que deseja visualizar: ");
+                scanf(" %[^\n]", usuario_desejado.email);
+
+                if(residente_existe(usuario_desejado) == 0){
+                    printf("\nResidente nao encontrado! Tente novamente! ");
+                }else{
+                    printar_notas_residente(usuario_desejado);
+                }
+                printf("\nDigite [0] para voltar ");
+                scanf("%d", &op);
+                menu_coordenacao();
+                break;
             default:
                 printf("Opcao invalida!");
                 menu_coordenacao();

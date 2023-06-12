@@ -1,6 +1,8 @@
 // #include "residentes_preceptores.h"
 #include "login_cadastro.h"
 #include "residentes_preceptores.h"
+#include "residente.h"
+#include "preceptor.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,6 +36,7 @@ void printar_residentes_preceptores(int residencia, int cargo){
                 printf("%s\n", usuario.email);
             }      
         }
+
         fclose(fp);
 
     }
@@ -52,3 +55,4 @@ char* converter_avaliacao_para_texto(int avaliacao)
         default: return "Invalido";
     }
 }
+

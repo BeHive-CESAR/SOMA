@@ -26,7 +26,7 @@ void ver_atividades_preceptor()
 
     char linha[MAX];
     while (fgets(linha, MAX, fp) != NULL) {
-        char primeiraPalavra = strtok(linha, " ");
+        char* primeiraPalavra = strtok(linha, " ");
         if (strcmp(primeiraPalavra, usuario_logado.email) == 0) {
             char* palavra = strtok(NULL, " "); 
             while (palavra != NULL) {
@@ -117,12 +117,12 @@ void opcoes_atividade()
     }
     else if(opcao == '/')
     {
-        atividades();
+        ver_atividades_preceptor();
     }
     else
     {
         printf("Opcao invalida. Tente novamente.\n");
-        atividades();
+        ver_atividades_preceptor();
     }
 }
 
@@ -341,6 +341,7 @@ void printar_notas_residente(Usuario residente_selecionado)
 
     while(fgets(linha, 70, fp) != NULL)
     {
+        
         char* token = strtok(linha, " ");
 
         strcpy(nome_residente, token);
@@ -348,11 +349,12 @@ void printar_notas_residente(Usuario residente_selecionado)
         strcpy(nome_preceptor, token);
         token = strtok(NULL, " ");
         nota_residente = atof(token);
-
+        
         if(strcmp(nome_residente, residente_selecionado.email) == 0)
         {
-            printf("\n%s %0.2f", nome_preceptor, nota_residente);
-        }   
+            printf("\nPreceptor: %s.... Media: %0.2f", nome_preceptor, nota_residente);
+        }
+  
     }
     fclose(fp);
 }
