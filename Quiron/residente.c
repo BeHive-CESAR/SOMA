@@ -8,8 +8,8 @@
 #include "interface.h"
 
 // Coisas do Residente
-// colocar opcao de cancelar o envio das notas do feedback na funcao fazer_feedback_para_preceptor
-// mudar o conteudo da variavel criterio para ficar de acordo com o figma na função fazer_feedback_para_preceptor
+// feedback_criterios MUDAR TXT para feedback_do_preceptor
+// mudar o conteudo da variavel criterio para ficar de acordo com o figma na função fazer_feedback_para_preceptor ?????????????????
 // mudar printf na função fazer_feedback_para_preceptor para ficar de acordo com o figma
 // mudar nome das variaveis na funcao fazer_feedback_para_preceptor. Atualmente esta vago/confuso o que cada variavel faz e é
 // mudar printf dentro do if de checagem 1 < || > 5 para numero, visto que usuario nao digita a avaliacao e sim o numero que deseja
@@ -42,7 +42,7 @@ void ver_atividades_residente()
 
 void ver_feedback_residente() 
 {
-    FILE *fp = fopen("feedbacks_residentes.txt", "r");
+    FILE *fp = fopen("feedback_preceptor.txt", "r");
     if (fp == NULL) {
         printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
         return;
@@ -59,10 +59,10 @@ void ver_feedback_residente()
 void fazer_feedback_para_preceptor()
 {
     Usuario preceptor_selecionado;
-    char criterio[7][50] = {"Relacionamento com os residentes", "Assiduidade", "Metodologia de ensino", 
-                            "Nivel de conhecimento", "Pontualidade", "Esclarecimento de duvidas",
-                            "Incentiva a participacao do aluno"};
-    char avaliacao_criterio[7][50];
+    char criterio[7][100] = {"O preceptor tem um bom relacionamento com os residentes", "O preceptor e assiduo", "O preceptor tem uma boa metodologia te ensino", 
+                            "O preceptor apresenta um bom nivel de conhecimento", "O preceptor e pontual", "O preceptor esclarece bem as duvidas",
+                            "O preceptor incentiva a participacao do aluno"};
+    char avaliacao_criterio[7][100];
     char opcao;
 
     printf("Qual o email do preceptor que voce deseja avaliar? ");
@@ -76,11 +76,12 @@ void fazer_feedback_para_preceptor()
     {
         printf("\n%s: ", criterio[i]);
         printf("\n[1] Muito Ruim\n[2] Ruim\n[3] Moderado\n[4] Bom\n[5] Muito Bom\nSelecione a avaliacao: ");
-        scanf("%s", avaliacao_criterio[i]);
-        int avaliacao = atoi(avaliacao_criterio[i]);
+        int avaliacao;
+        scanf("%d", &avaliacao);
+        strcpy(avaliacao_criterio[i], converter_numero_feedback_para_texto(avaliacao));
         if(avaliacao < 1 || avaliacao > 5)
         {
-            printf("\nAvaliacao invalida! Apenas avaliacoes entre 1 e 5.");
+            printf("\nFeedback invalido! Apenas feedbacks entre 1 e 5.");
             fazer_feedback_para_preceptor();
         }
     }
@@ -89,17 +90,23 @@ void fazer_feedback_para_preceptor()
     printf("\nDigite um comentario sobre o preceptor: ");
     scanf(" %[^\n]", comentario);
 
-    printf("[+]Enviar: ");
+    printf("[+]Enviar: \n[/]Cancelar: ");
     scanf("\n%c", &opcao);
     if(opcao == '+'){
+        salvar_feedback_preceptor_nome(preceptor_selecionado);
         for (int i = 0; i < 7; i++)
         {
-            salvar_feedback_preceptor(preceptor_selecionado, avaliacao_criterio[i]);
+            salvar_feedback_preceptor(preceptor_selecionado, criterio[i], avaliacao_criterio[i]);
         }
-        // Salve o comentário como uma avaliação
-        salvar_feedback_preceptor(preceptor_selecionado, comentario);
+        
+        salvar_feedback_preceptor(preceptor_selecionado, "Comentário", comentario);
         
         printf("\nAvaliacoes e comentario atribuidos com sucesso!");
+        menu_residente();
+    }
+    else if(opcao == '/')
+    {
+        printf("\nFeedback cancelado.\n");
         menu_residente();
     }
     else
@@ -109,67 +116,62 @@ void fazer_feedback_para_preceptor()
     }
 }
 
-
-void salvar_feedback_preceptor(Usuario preceptor_selecionado, char* avaliacao)
+void salvar_feedback_preceptor_nome(Usuario preceptor_selecionado)
 {
-    FILE *fp = fopen("avaliacao_preceptor.txt", "a+");
+    FILE *fp = fopen("feedback_residente.txt", "a+");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
+
+    fputs(preceptor_selecionado.email, fp);
+    fputs("\n", fp);
     fclose(fp);
+}
 
-    fp = fopen("avaliacao_preceptor.txt", "r");
+void salvar_feedback_preceptor(Usuario preceptor_selecionado, char* criterio, char* avaliacao)
+{
+    FILE *fp = fopen("feedback_residente.txt", "a+");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
 
-    char linhas[100][100];
-    int num_linhas = 0;
-    int preceptor_found = 0;
+    fputs(criterio, fp);
+    fputs(":\n", fp);
+    fputs(avaliacao, fp);
+    fputs("\n", fp);
+    fclose(fp);
+}
+
+char* converter_numero_feedback_para_texto(int notas) 
+{
+    switch(notas) 
+    {
+        case 1: return "Muito Ruim";
+        case 2: return "Ruim";
+        case 3: return "Moderado";
+        case 4: return "Bom";
+        case 5: return "Muito Bom";
+        default: return "Invalido";
+    }
+}
+
+void ver_nota_residente() 
+{
+    FILE *fp = fopen("notas_residentes.txt", "r");
+    if (fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo de atividades.\n");
+        return;
+    }
 
     char linha[100];
-    while(fgets(linha, sizeof(linha), fp) != NULL) 
+    while (fgets(linha, sizeof(linha), fp) != NULL) 
     {
-        linha[strcspn(linha, "\n")] = 0;  // remover a nova linha do final
-        if(strlen(linha) == 0) 
-        {
-            continue;  // ignorar linhas vazias
-        }
-
-        if(strstr(linha, preceptor_selecionado.email) != NULL) 
-        {
-            strcat(linha, " ");
-            strcat(linha, avaliacao);
-            preceptor_found = 1;
-        }
-        strcpy(linhas[num_linhas++], linha);
-    }
-
-    if(!preceptor_found)  // se o preceptor não foi encontrado, adicione uma nova linha para ele
-    {
-        strcpy(linha, preceptor_selecionado.email);
-        strcat(linha, " ");
-        strcat(linha, avaliacao);
-        strcpy(linhas[num_linhas++], linha);
-    }
-
-    fclose(fp);
-
-    fp = fopen("avaliacao_preceptor.txt", "w");
-    if(fp == NULL) 
-    {
-        printf("Nao foi possivel abrir o arquivo para escrita.\n");
-        return;
-    }
-
-    for(int i = 0; i < num_linhas; i++) 
-    {
-        fputs(linhas[i], fp);
-        fputs("\n", fp);
+        printf("%s", linha);
     }
 
     fclose(fp);

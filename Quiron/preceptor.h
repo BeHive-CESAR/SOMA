@@ -1,6 +1,5 @@
 void ver_atividades_preceptor();
 void criar_atividade();
-void opcoes_atividade();
 void avaliar_residente();
 void avisos_preceptor();
 void salvar_nota_residente(Usuario residente_selecionado, char* nota);

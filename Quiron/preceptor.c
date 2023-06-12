@@ -178,7 +178,7 @@ void avaliar_residente()
         system("cls");
         printf("\nNotas atribuidas com sucesso!");
 
-        opcoes_atividade();
+        ver_atividades_preceptor();
     }
     else
     {
@@ -428,7 +428,6 @@ void fazer_feedback_para_residente()
         int int_nota_criterio = atoi(nota_feedback[i]);
         if(int_nota_criterio < 1 || int_nota_criterio > 5)
         {
-            system("cls");
             printf("\nNota invalida! Apenas notas entre 1 e 5.");
             fazer_feedback_para_residente();
         }
@@ -446,23 +445,18 @@ void fazer_feedback_para_residente()
         {
             salvar_feedback_residente(residente_selecionado, nota_feedback[i]);
         }
-        // Salva o comentário como um comentario
+        // Salva o comentÃ¡rio como um comentario
         salvar_feedback_residente(residente_selecionado, comentario);
         // Salva o nome do preceptor que esta logado e realizou o feedback
         salvar_feedback_residente(residente_selecionado, usuario_logado.email);
 
-        system("cls");
+        
         printf("\nFeedback e observacao atribuidos com sucesso!");
         menu_preceptor();
     }
-    else if(opcao == '/')
+    else
     {
-        system("cls");
-        fazer_feedback_para_residente();
-    }
-    else{
-        system("cls");
-        printf("Opcao invalida, tente novamente");
+        printf("Opcao invalida. Tente novamente.\n");
         fazer_feedback_para_residente();
     }
 }
@@ -473,9 +467,8 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     FILE *fp = fopen("feedback_preceptor.txt", "a+");
     if(fp == NULL) 
     {
-        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
-        fazer_feedback_para_residente();
+        return;
         
     }
     fclose(fp);
@@ -483,9 +476,8 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     fp = fopen("feedback_preceptor.txt", "r");
     if(fp == NULL) 
     {
-        system("cls");
         printf("Nao foi possivel abrir o arquivo.\n");
-        fazer_feedback_para_residente();
+        return;
     }
 
     char linhas[100][100];
@@ -523,7 +515,6 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     fp = fopen("feedback_preceptor.txt", "w");
     if(fp == NULL) 
     {
-        system("cls");
         printf("Nao foi possivel abrir o arquivo para escrita.\n");
         return;
     }
@@ -535,11 +526,6 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
     }
 
     fclose(fp);
-
-    system("cls");
-    printf("Feedback salvo com sucesso!\n");
-    menu_preceptor();
-    
 }
 
 void ver_feedback_preceptor()

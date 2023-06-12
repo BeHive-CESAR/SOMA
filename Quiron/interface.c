@@ -150,11 +150,11 @@ void menu_residente()
     scanf("%d", &op);
     switch(op) 
     {
-        // case 1:
-        //     ver_atividades_residente();
-        //     break;
+        case 1:
+            ver_atividades_residente();
+            break;
         case 2:
-            printar_notas_residente(usuario_logado);
+            ver_nota_residente();
             break;
         case 3:
             ver_feedback_residente();
