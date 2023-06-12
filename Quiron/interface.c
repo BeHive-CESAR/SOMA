@@ -21,7 +21,7 @@ extern Usuario usuario_logado;
 // Na pagina de avisos aparece apenas Feedback disponivel. Deveria ter algum botao para ser apertado? Atualmente apenas esta um aviso. Acredito que nao seja muito "claro" de que o usuario deve apertar no aviso em si
 
 
-void main_menu()
+void main_menu() 
 {
     system("cls");
     unsigned int op, id;
@@ -173,7 +173,7 @@ void menu_residente()
 
 }
 
-void menu_preceptor()
+void menu_preceptor() //Função responsável pela interface do menu do preceptor (ações que ele pode realizar no sistema)
 {
     unsigned int op;
     char opcao;
@@ -183,12 +183,15 @@ void menu_preceptor()
     system("cls");
     printf("--- Preceptor ---\n");
     printf("%s\n", usuario_logado.email);
+
     printf("%s | Preceptor", residencias[usuario_logado.idResidencia -1]);
 
-    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Ver Feedbacks\n[5]Lista de Residentes\n[6]Sair da Conta\nSelecione o que deseja: ");
+    printf("\n\n[1]Atividades\n[2]Avisos\n[3]Criar atividade\n[4]Ver Feedbacks\n[5]Lista de Residentes" //opções disponíveis
+    "\n[6]Sair da Conta\nSelecione o que deseja: ");
+
     scanf("%d", &op);
 
-    switch (op)
+    switch (op) //Switch feito para chamar as funções responsáveis por cada atividade
     {
     case 1:
         //atividades
@@ -221,6 +224,7 @@ void menu_preceptor()
         break;
         
     default:
+        system("cls");
         printf("Opcao invalida! Tente novamente.\n");
         menu_preceptor();
         break;
