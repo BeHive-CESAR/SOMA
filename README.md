@@ -1,18 +1,18 @@
-# SOMA
-
-> Este é um projeto para a cadeira de projetos 2 que visa auxiliar na administração e organização do programa de residencia do HC.
-> Somos um grupo formado por estudantes de Design e Ciências da Computação da Cesar School e buscamos ajudar pessoas através de nossas soluções tecnológicas. 
 
 # Somos Quíron
+> Este é um projeto para a cadeira de projetos 2 que visa auxiliar na administração e organização do programa de residencia do HC.
+> Somos um grupo formado por estudantes de Design e Ciências da Computação da Cesar School e buscamos ajudar pessoas através de nossas soluções tecnológicas.<br>
+> Para saber mais, acesse o nosso site: <a href="https://sites.google.com/cesar.school/qiron/início?authuser=1">Link para nosso site</a>.
+<br>
 
-## 🤝 Equipe:
-### 🎨 Designers 
+##  Equipe🤝
+### Designers🎨
 <p>Camila Chagas<br>
 Leonardo Lima<br>
 Rodrigo Fialho<br>
 Victória Siqueira</p>
 
-### 💻 Devs
+### Devs💻
 <p>Caio Barreto<br>
   Carlos Eduardo<br>
   Gabriel Chaves Oliveira<br>
@@ -20,17 +20,18 @@ Victória Siqueira</p>
   Maria Fernanda Marques<br>
   Pedro Villas Boas
 </p>
+<br>
 
-<p><a href="https://sites.google.com/cesar.school/qiron/início?authuser=1">Link para nosso site</a></p>
+# SOMA
+## Nosso produto
+<p>O SOMA (Sistema Organizacional de Medicina Automatizado), trás aos preceptores e aos residentes do Hospital das Clinicas uma forma mais simples de entender o processo de avaliação. Sendo um aplicativo mobile, gratuito e que possui três interfaces: Interface para Residente, Preceptor e uma para a coordenação. Permitindo registrar o processo avaliativo dos residentes (notas/pontuações), registrar feedbacks (feedback bidirecional) e a visualização do historico das notas do residente assim como os feedbacks recebidos. Assim tornando o ambiente da residencia mais eficiente.
 
-<h3>Nosso produto: O SOMA</h3>
-<p>Nosso produto trás aos preceptores e aos residentes do Hospital das Clinicas uma forma mais simples de entender o processo de avaliação. Sendo um aplicativo mobile, gratuito e que possui três interfaces: Interface para Residente, Preceptor e uma para a coordenação. Permitindo registrar o processo avaliativo dos residentes (notas/pontuações), registrar feedbacks (feedback bidirecional) e a visualização do historico das notas do residente assim como os feedbacks recebidos. Assim tornando o ambiente da residencia mais eficiente.
+Nesse código desenvolvido 100% na linguagem C criamos um prototipo ilustrativo de como seria o funcionamento do app. Usando escrita e leitura de arquivos como banco de dados e o proprio terminal como uma interface</p>
+<br>
 
-Nesse código desenvolvido na linguagem C criamos um prototipo ilustrativo de como seria o funcionamento do app. Usando escrita e leitura de arquivos como banco de dados e o proprio terminal como uma interface</p>
-##
-<h3>Arquivos presentes no sistema</h3>
+## Arquivos presentes no sistema
 <dl>
-  <dt>main.c</dt> <dd> Roda a função main.</dd>
+  <dt>main.c</dt> <dd> Roda a função do menu principal.</dd>
   <dt>interface.c , interface.h</dt> <dd> Armazena as interfaces de todos os usuarios as organizando ao puxar funções das outras bibliotecas.</dd>
   <dt>login_cadastro.c , login_cadastro.h</dt> <dd> Realiza tarefa de registro dos novos usuarios no programa.</dd> 
   <dt>preceptor.c , preceptor.h</dt> <dd> Armazena funções utilizadas principalmente na interface no preceptor.</dd>
@@ -45,10 +46,9 @@ Nesse código desenvolvido na linguagem C criamos um prototipo ilustrativo de co
   <dd>atividades.txt</dd>
 
 </dl>
+<br>
 
-##
-
-<h3>Interfaces do nosso sistema: </h3><br>
+## Interfaces do nosso sistema
 <dl>
   <dt>Coordenação</dt>
   <dd>A principio a interface da coordenação será acessada com um login e senha predefinidos <em><strong>(admin, admin)</strong></em>. Uma vez acessado, a    coordenação terá permissão de visualizar todas as informações dos residentes e preceptores, alem de poder cadastrar novos usuarios e criar novas atividades para os residentes.</dd>
@@ -58,13 +58,15 @@ Nesse código desenvolvido na linguagem C criamos um prototipo ilustrativo de co
   <dd>Após a realização, por parte da coordenação, do cadastro do residente com seu email e senha, o mesmo poderá acessar a interface ao fazer o login. Já dentro de sua interface o usuário terá a opção visualizar suas notas e os feedbacks recebidos. Além disso haverá a opção de fornecer um feedback para ser preceptor </dd>
 </dl>
 
-<h3>Como usar nosso sistema</h3>
+<br>
 
-> A forma mais fácil é simplesmente executar `SOMA.exe`
+## Como usar nosso sistema
+A forma mais fácil é simplesmente executar `SOMA.exe`
+<br><br>
 
-Mas para realizar a efetiva compilação do nosso código é simples.
-- Estando dentro da pasta Quiron (`cd Quiron` no terminal)
-- Execute o seguinte comando: `gcc -o SOMA main.c login_cadastro.c interface.c residentes_preceptores.c preceptor.c residente.c`
-- Isso era criar o arquivo `SOMA.exe` e basta executa-lo
+Mas para realizar a efetiva compilação do nosso código é simples:
+1. Estando dentro da pasta Quiron (`cd Quiron` no terminal)
+2. Execute o seguinte comando: `gcc -o SOMA main.c login_cadastro.c interface.c residentes_preceptores.c preceptor.c residente.c`
+3. Isso era criar o arquivo `SOMA.exe` e basta executa-lo
 
 
