@@ -193,8 +193,8 @@ void avisos_preceptor()
 
     printf("--- Avisos ---");
     printf("\nFeedback Disponivel");
-    printf("\n[1]Realizar Feedback: ");
-    printf("\n[2]Voltar: ");
+    printf("\n[1]Realizar Feedback");
+    printf("\n[2]Voltar\nEscolha: ");
 
     scanf("%d", &op);
     if(op == 1) // realiza o feedback

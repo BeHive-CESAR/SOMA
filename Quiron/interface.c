@@ -173,11 +173,10 @@ void menu_coordenacao()
     }
 }
 
-
 void menu_residente()
 {
     unsigned int op;
-    char opcao;
+    char opcao, voltar;
     char residencias[4][15] = {"Anestesia", "Cardiologia", "Cirurgia Geral", "Clinica Geral"};
 
 
@@ -199,6 +198,9 @@ void menu_residente()
             break;
         case 3:
             ver_feedback_residente();
+            printf("[/]Voltar ");
+            scanf("\n%c", &voltar);
+            menu_residente();
             break;
         case 4:
             fazer_feedback_para_preceptor();
