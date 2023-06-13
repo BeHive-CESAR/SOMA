@@ -7,18 +7,6 @@
 #include "residentes_preceptores.h"
 #include "interface.h"
 
-// Coisas do Preceptor
-// fazer pagina de feedback dos residentes para o preceptor -> em processo (peu)
-// checar se caso digite um numero maior que 5 e menor que 1, na proximo vez digitar o numero certo e ter certeza que o numero correto ira para o txt na funcao fazer_feedback_para_residente
-// Falta apenas a função de fazer a visualização do feedback que os residentes fizeram do preceptor
-// Na funcao fazer_feedback_para_residente apos confirmar o envio do feedback o programa encerra. why?
-// Adicionar o nome do preceptor que esta fazendo o feedback ao residente no arquivo de feedback_preceptor
-// funcao fazer_feedback_para_residente nao esta funcionando corretamente. 
-    // 1. o comentario que é adicionado primeiro fica se repetindo em todos os outros feedbacks
-    // 2. Esta apagando qualquer residente que ja estivesse presente no arquivo
-// função de perfil de residente encerra o programa após mostrar o perfil do residente | deveria voltar para a funcao de lista_residentes
-// atualmente a funcao de fazer_feedback_para_residente() esta gravando o nome que foi 
-
 
 extern Usuario usuario_logado;
 

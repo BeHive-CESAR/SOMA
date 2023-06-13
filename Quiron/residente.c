@@ -7,18 +7,6 @@
 #include "residentes_preceptores.h"
 #include "interface.h"
 
-// Coisas do Residente
-// feedback_criterios MUDAR TXT para feedback_do_preceptor
-// mudar o conteudo da variavel criterio para ficar de acordo com o figma na função fazer_feedback_para_preceptor ?????????????????
-// mudar printf na função fazer_feedback_para_preceptor para ficar de acordo com o figma
-// mudar nome das variaveis na funcao fazer_feedback_para_preceptor. Atualmente esta vago/confuso o que cada variavel faz e é
-// mudar printf dentro do if de checagem 1 < || > 5 para numero, visto que usuario nao digita a avaliacao e sim o numero que deseja
-// mudar printf de fazer comentario sobre o preceptor na funcao fazer_feedback_para_preceptor para ficar de acordo com o figma 
-// Verificar se peu colocou as #include dos arquivos .h na ordem correta, com suas dependencias verificadas para estar na ordem de quem depende de quem
-// trocar nome do arquivo "avaliacao_preceptor.txt" na funcao fazer_feedback_para_preceptor e salvar_feedback_preceptor para "feedback_residentes.txt" para ficar igual aos outros arquivos
-// verificar ortografia nos prints | alguns prints estao com "ç" ou acentou ou "~"
-// ajustar a formatação da funcao ver_feedback_residente() para que fique no lugar dos numeros, as palavras que estao na funcao converter_feedback_para_texto() | esta localizada no arquivo resisdentes_preceptores.c
-// ajustar a formatação na funcao ver_feedback_resisdente() para que fique um em baixo do outro
 
 extern Usuario usuario_logado;
 //esta funçao ira abrir um arquivo chamado 'atividades.txt' e imprimi linha por linha se não consegue abrir o arquivo printa: Nao foi possivel abrir o arquivo de atividades
