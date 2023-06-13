@@ -195,6 +195,9 @@ void menu_residente()
             break;
         case 2:
             ver_nota_residente();
+            printf("[/]Voltar ");
+            scanf("\n%c", &voltar);
+            menu_residente();
             break;
         case 3:
             ver_feedback_residente();
