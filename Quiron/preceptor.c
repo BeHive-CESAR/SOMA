@@ -13,6 +13,7 @@ extern Usuario usuario_logado;
 #define MAX 70
 #define MAX_CRITERIOS 6
 
+// Função para ler arquivo e imprimir as atividades que o preceptor realizou
 void ver_atividades_preceptor()
 {
     
@@ -59,7 +60,7 @@ void ver_atividades_preceptor()
     }
 
 }
-
+// Função para adiconar atividades no cronograma dos residentes
 void criar_atividade()
 {
     
@@ -109,9 +110,7 @@ void criar_atividade()
     system("cls");
     menu_preceptor();
 }
-
-
-
+// Função para realizar a avaliação das competencias dos residentes
 void avaliar_residente()
 {
 
@@ -174,7 +173,7 @@ void avaliar_residente()
         avaliar_residente();
     }
 }
-
+// Função para criar avisod para serem enviados aos residentes
 void avisos_preceptor()
 {
     unsigned int op;
@@ -202,7 +201,7 @@ void avisos_preceptor()
         avisos_preceptor();
     }
 }
-
+// Função para escrever a nota do residente em uma arquivo
 void salvar_nota_residente(Usuario residente_selecionado, char* nota) 
 {
     FILE *fp = fopen("notas_residentes.txt", "a"); // abre o arquivo em modo anexação
@@ -223,7 +222,7 @@ void salvar_nota_residente(Usuario residente_selecionado, char* nota)
     
 
 }
-
+// Função para imprimir lista de residente
 void lista_residentes()
 {
     Usuario user, auth, residente_selecionado;   
@@ -269,7 +268,7 @@ void lista_residentes()
     menu_preceptor();
     
 }
-
+// Função para separar as opções de residente
 void perfil_residente(Usuario residente_selecionado, Usuario auth)
 {
     printf("--- Avaliacao Geral ---");
@@ -306,7 +305,7 @@ void perfil_residente(Usuario residente_selecionado, Usuario auth)
     printf("\nAvalicoes Individuais");
     printar_notas_residente(residente_selecionado);
 }
-
+// Função para mostrar no terminal as competencias em forma de grafico
 void printar_grafico() 
 {
 
@@ -341,7 +340,7 @@ void printar_grafico()
     }
     printf("\n");
 }
-
+// Função para exibir media do residente 
 void printar_notas_residente(Usuario residente_selecionado)
 {
     FILE *fp = fopen("notas_residentes.txt", "r");
@@ -370,7 +369,7 @@ void printar_notas_residente(Usuario residente_selecionado)
     }
     fclose(fp);
 }
-
+// Função para conferir se o usuario está dentro do arquivo cadastrados.txt
 int residente_existe(Usuario residente_selecionado) 
 {
     FILE *fp = fopen("cadastrados.txt", "r");
@@ -390,7 +389,7 @@ int residente_existe(Usuario residente_selecionado)
     fclose(fp);
     return 0;  // não encontrado
 }
-
+// Função para enviar feedback para determinado residente
 void fazer_feedback_para_residente()
 {
     Usuario residente_selecionado;
@@ -452,8 +451,7 @@ void fazer_feedback_para_residente()
         fazer_feedback_para_residente();
     }
 }
-
-
+// Função para escrever feedback em um arquivo
 void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
 {
     FILE *fp = fopen("feedback_preceptor.txt", "a+");
@@ -519,7 +517,7 @@ void salvar_feedback_residente(Usuario residente_selecionado, char* nota)
 
     fclose(fp);
 }
-
+// Função para ver feedbaks escritos por residentes
 void ver_feedback_preceptor()
 {
     system("cls");

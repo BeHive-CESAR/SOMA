@@ -10,7 +10,7 @@
 
 #define FILE_NAME "cadastrados.txt"
 
-
+// Função para exibir lista de preceptores e residentes cadastrados
 void printar_residentes_preceptores(int residencia, int cargo){
 
     FILE *fp = fopen(FILE_NAME, "r");
@@ -43,7 +43,7 @@ void printar_residentes_preceptores(int residencia, int cargo){
 
     
 }
-
+// Função para converter os dados numerais do feedback em textos representante ao avaliar
 char* converter_feedback_para_texto(int notas) 
 {
     switch(notas) 
@@ -56,7 +56,7 @@ char* converter_feedback_para_texto(int notas)
         default: return "Invalido";
     }
 }
-
+// Função para definir se email digitado é de um residente ou preceptor
 int preceptor_ou_residente(Usuario user){
     Usuario usuario;
 
@@ -89,7 +89,7 @@ int preceptor_ou_residente(Usuario user){
     fclose(fp);
     return 0;  // não encontrado
 }
-
+// Função para ver o feedback dos residentes a determinado preceptor
 void ver_feedback_preceptor_coord(){
     system("cls");
     char opcao;

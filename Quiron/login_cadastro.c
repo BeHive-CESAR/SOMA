@@ -9,6 +9,7 @@
 
 Usuario usuario_logado;
 
+// Função para realizar o cadastro de novos usuarios no sistema, adicionando informação em um arquivo
 int cadastrar(int residencia){
 
     Usuario user;
@@ -36,7 +37,7 @@ int cadastrar(int residencia){
     return 0;
 
 }
-
+// Função para definir o tipo de interface que cada usuario vai utilizar
 int login(){
     system("cls");
     Usuario user, auth;
@@ -82,7 +83,7 @@ int login(){
 
     return 4;
 }
-
+// Função que separa o tipo de usuario que está usando o sistema
 void def_usuario_logado(Usuario auth)
 {
     strcpy(usuario_logado.email, auth.email);

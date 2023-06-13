@@ -9,18 +9,8 @@
 
 extern Usuario usuario_logado;
 
-// Coisas Gerais
-// Lembrar de pedir para expandir o terminal para melhor visualização do programa no README
-// colocar um define para o numero 7 que é a quantidade de criterios do feedback em fazer_feedback_para_preceptor
-// colocar um define para o numero 6 que é a quantidade de criterios do feedback em fazer_feedback_para_residente
-// Ajeitar os system("cls"). Em algumas funcoes quando o usario digita algo errado ou é confirmado o envio de algum formulario e chamamos novamente a função o "cls" apaga imediatamente o aviso de erro ou a confirmacao de envio
-// Padronizar os botoes que estamos usando nas funcoes. Ex.: confirmar envio ser o botao "+". Ex.2: voltar para tela anterior ser o botao "/"
 
-// Coisas da Interface do Figma
-// Quando o feedback fica disponivel, quem adiciona o feedback? Seja para o preceptor ou residente, mas quem adiciona o feedback na pagina de avisos?
-// Na pagina de avisos aparece apenas Feedback disponivel. Deveria ter algum botao para ser apertado? Atualmente apenas esta um aviso. Acredito que nao seja muito "claro" de que o usuario deve apertar no aviso em si
-
-
+// Função para iniciar o programa e direcionar o usuario
 void main_menu() 
 {
     system("cls");
@@ -67,7 +57,7 @@ void main_menu()
         break;
     }
 }
-
+//Função responsável pela interface do menu da coordenação (ações que ela pode realizar no sistema)
 void menu_coordenacao()
 {
     unsigned int op;
@@ -172,7 +162,7 @@ void menu_coordenacao()
         menu_coordenacao();
     }
 }
-
+//Função responsável pela interface do menu do residente (ações que ele pode realizar no sistema)
 void menu_residente()
 {
     unsigned int op;
@@ -215,8 +205,8 @@ void menu_residente()
     }
 
 }
-
-void menu_preceptor() //Função responsável pela interface do menu do preceptor (ações que ele pode realizar no sistema)
+//Função responsável pela interface do menu do preceptor (ações que ele pode realizar no sistema)
+void menu_preceptor() 
 {
     unsigned int op;
     char opcao;
