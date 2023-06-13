@@ -56,3 +56,58 @@ char* converter_feedback_para_texto(int notas)
         default: return "Invalido";
     }
 }
+
+int preceptor_ou_residente(Usuario user){
+    Usuario usuario;
+
+    FILE *fp = fopen("cadastrados.txt", "r");
+    char linha[69];
+    char email[50];
+
+    while (fgets(linha, sizeof(linha), fp)){
+        char* token = strtok(linha, " ");
+
+        usuario.idCargo = atoi(token);
+        token = strtok(NULL, " ");
+        strcpy(usuario.email, token);
+        token = strtok(NULL, " ");
+        strcpy(usuario.senha, token);
+        token = strtok(NULL, " ");
+        usuario.idResidencia = atoi(token);
+
+        if(strcmp(user.email, usuario.email) == 0){
+            fclose(fp);
+            if(usuario.idCargo == 1){
+                return 1;
+            }else{
+                return 2;
+            }
+        }
+
+        
+    }
+    fclose(fp);
+    return 0;  // não encontrado
+}
+
+void ver_feedback_preceptor_coord(){
+    system("cls");
+    char opcao;
+    char linha[69];
+    FILE *fp = fopen("feedback_residente.txt", "r");
+
+    if (fp == NULL) 
+    {
+        printf("Nao foi possivel abrir o arquivo de feedbacks.\n");
+        return;
+    }
+
+    printf("Anonimo\n");
+
+    while (fgets(linha, 70, fp) != NULL) 
+    {
+        printf("%s", linha);
+    }
+
+    fclose(fp);
+}

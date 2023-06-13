@@ -107,10 +107,51 @@ void menu_coordenacao()
                 printf("Selecione o usuario que deseja visualizar: ");
                 scanf(" %[^\n]", usuario_desejado.email);
 
-                if(residente_existe(usuario_desejado) == 0){
+                if(preceptor_ou_residente(usuario_desejado) == 0){
                     printf("\nResidente nao encontrado! Tente novamente! ");
+                }else if(preceptor_ou_residente(usuario_desejado) == 2){
+                    int escolha;
+                    printf("[1]Atividades\n[2]Notas\n[3]FeedBacks\n[0]Voltar\nEscolha a opcao que deseja: ");
+                    scanf("%d", &escolha);
+
+                    switch(escolha){
+                        case 1:
+                            ver_atividades_residente();
+                            break;
+                        
+                        case 2:
+                            printar_notas_residente(usuario_desejado);
+                            break;
+                        
+                        case 3:
+                            ver_feedback_residente();
+                            break;
+                        
+                        default:
+                            menu_coordenacao();
+                            break;
+
+                    }
+
+                    
                 }else{
-                    printar_notas_residente(usuario_desejado);
+                    int escolha2;
+                    printf("[1]Atividades\n[2]FeedBacks\n[0]Voltar\nEscolha a opcao que deseja: ");
+                    scanf("%d", &escolha2);
+
+                    switch(escolha2){
+                        case 1:
+                            ver_atividades_residente();
+                            break;
+                        
+                        case 2:
+                            ver_feedback_preceptor_coord();
+                            break;
+                        
+                        default:
+                            menu_coordenacao();
+                            break;
+                    }
                 }
                 printf("\nDigite [0] para voltar ");
                 scanf("%d", &op);
