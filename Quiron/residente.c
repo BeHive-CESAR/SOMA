@@ -21,7 +21,7 @@
 // ajustar a formatação na funcao ver_feedback_resisdente() para que fique um em baixo do outro
 
 extern Usuario usuario_logado;
-
+//esta funçao ira abrir um arquivo chamado 'atividades.txt' e imprimi linha por linha se não consegue abrir o arquivo printa: Nao foi possivel abrir o arquivo de atividades
 void ver_atividades_residente() 
 {
     FILE *fp = fopen("atividades.txt", "r");
@@ -32,14 +32,15 @@ void ver_atividades_residente()
     }
 
     char linha[100];
+        // Lendo o arquivo linha por linha e imprimindo cada uma
     while (fgets(linha, sizeof(linha), fp) != NULL) 
     {
         printf("%s", linha);
     }
-
+    // Fechando o arquivo após a leitura
     fclose(fp);
 }
-
+// Esta funça é semelhante a ver_atividades_residente, mas lê e imprime o conteúdo do arquivo 'feedback_preceptor.txt'
 void ver_feedback_residente() 
 {
     FILE *fp = fopen("feedback_preceptor.txt", "r");
@@ -55,9 +56,10 @@ void ver_feedback_residente()
 
     fclose(fp);
 }
-
+// Esta funçao pega o feedback do residente sobre um preceptor, incluindo notas e comentários, e salva essas informações em um arquivo
 void fazer_feedback_para_preceptor()
 {
+    // Array com os criterios para a avaliaçao do preceptor
     Usuario preceptor_selecionado;
     char criterio[7][100] = {"O preceptor tem um bom relacionamento com os residentes", "O preceptor e assiduo", "O preceptor tem uma boa metodologia te ensino", 
                             "O preceptor apresenta um bom nivel de conhecimento", "O preceptor e pontual", "O preceptor esclarece bem as duvidas",
@@ -115,37 +117,39 @@ void fazer_feedback_para_preceptor()
         fazer_feedback_para_preceptor();
     }
 }
-
+// Esta funcao salva o nome do preceptor em um arquivo de feedback
 void salvar_feedback_preceptor_nome(Usuario preceptor_selecionado)
 {
+    // Abrindo o arquivo 'feedback_residente.txt' para escrita
     FILE *fp = fopen("feedback_residente.txt", "a+");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
-
+    // Escrevendo o email do preceptor no arquivo e fechando o arquivo
     fputs(preceptor_selecionado.email, fp);
     fputs("\n", fp);
     fclose(fp);
 }
-
+// Esta funçao salva o feedback feito pelo residente no arquivo feedback_residente.txt
 void salvar_feedback_preceptor(Usuario preceptor_selecionado, char* criterio, char* avaliacao)
 {
+    // Abrindo o arquivo 'feedback_residente.txt' para escrita
     FILE *fp = fopen("feedback_residente.txt", "a+");
     if(fp == NULL) 
     {
         printf("Nao foi possivel abrir o arquivo.\n");
         return;
     }
-
+// Escrevendo a avaliação do critério no arquivo e fechando o arquivo
     fputs(criterio, fp);
     fputs(":\n", fp);
     fputs(avaliacao, fp);
     fputs("\n", fp);
     fclose(fp);
 }
-
+// Esta funcao converte a nota numerica em "Muito Ruim" "Ruim" "Moderado" "Bom" "Muito Bom"
 char* converter_numero_feedback_para_texto(int notas) 
 {
     switch(notas) 
@@ -158,7 +162,7 @@ char* converter_numero_feedback_para_texto(int notas)
         default: return "Invalido";
     }
 }
-
+// Esta funçao é parecida com a 1 e a 2, mas lê e imprime o conteúdo do arquivo 'notas_residentes.txt'
 void ver_nota_residente() 
 {
     FILE *fp = fopen("notas_residentes.txt", "r");
