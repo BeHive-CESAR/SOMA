@@ -11,16 +11,21 @@
 #define FILE_NAME "cadastrados.txt"
 
 // Função para exibir lista de preceptores e residentes cadastrados
-void printar_residentes_preceptores(int residencia, int cargo){
+void printar_residentes_preceptores(int residencia, int cargo)
+{
 
     FILE *fp = fopen(FILE_NAME, "r");
     Usuario usuario;
 
-    if (fp == NULL){
+    if (fp == NULL) // Nao achou nenhum residente ou preceptor para a residencia selecionada
+    {
         printf("Nenhum usuario cadastrado para essa residencia!\n");
-    }else{
+    }
+    else // Achou!
+    {
         char linha[69];
-        while(fgets(linha, 70, fp) != NULL){
+        while(fgets(linha, 70, fp) != NULL) // While verifica se o usuario digitado existe no arquivo e printa suas informações
+        {
             char* token = strtok(linha, " ");
 
             usuario.idCargo = atoi(token);
@@ -32,7 +37,8 @@ void printar_residentes_preceptores(int residencia, int cargo){
             token = strtok(NULL, " ");
             usuario.idResidencia = atoi(token);
 
-            if(usuario.idCargo == cargo && usuario.idResidencia == residencia){
+            if(usuario.idCargo == cargo && usuario.idResidencia == residencia)
+            {
                 printf("%s\n", usuario.email);
             }      
         }
@@ -57,14 +63,16 @@ char* converter_feedback_para_texto(int notas)
     }
 }
 // Função para definir se email digitado é de um residente ou preceptor
-int preceptor_ou_residente(Usuario user){
+int preceptor_ou_residente(Usuario user)
+{
     Usuario usuario;
 
     FILE *fp = fopen("cadastrados.txt", "r");
     char linha[69];
     char email[50];
 
-    while (fgets(linha, sizeof(linha), fp)){
+    while (fgets(linha, sizeof(linha), fp))
+    {
         char* token = strtok(linha, " ");
 
         usuario.idCargo = atoi(token);
@@ -75,11 +83,15 @@ int preceptor_ou_residente(Usuario user){
         token = strtok(NULL, " ");
         usuario.idResidencia = atoi(token);
 
-        if(strcmp(user.email, usuario.email) == 0){
+        if(strcmp(user.email, usuario.email) == 0)
+        {
             fclose(fp);
-            if(usuario.idCargo == 1){
+            if(usuario.idCargo == 1)
+            {
                 return 1;
-            }else{
+            }
+            else
+            {
                 return 2;
             }
         }
@@ -90,7 +102,8 @@ int preceptor_ou_residente(Usuario user){
     return 0;  // não encontrado
 }
 // Função para ver o feedback dos residentes a determinado preceptor
-void ver_feedback_preceptor_coord(){
+void ver_feedback_preceptor_coord()
+{
     system("cls");
     char opcao;
     char linha[69];
